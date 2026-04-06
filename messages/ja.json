@@ -1,0 +1,138 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "about": "JSLTCCについて",
+    "japaneseLanguage": "日本語コース",
+    "studyInJapan": "日本留学",
+    "studyInAustralia": "オーストラリア留学",
+    "visaServices": "ビザサービス",
+    "activities": "活動・イベント",
+    "contact": "お問い合わせ",
+    "enquireNow": "今すぐ相談"
+  },
+  "hero": {
+    "headline": "日本へのゲートウェイ",
+    "subheadline": "日本スリランカ技術文化センター — 2002年よりスリランカの人材と日本・オーストラリアの機会をつなぎます。",
+    "explorePrograms": "プログラムを見る",
+    "contactUs": "お問い合わせ"
+  },
+  "stats": {
+    "founded": "設立",
+    "graduates": "卒業生",
+    "partnerSchools": "提携校",
+    "destinations": "留学先"
+  },
+  "services": {
+    "title": "プログラム・サービス",
+    "subtitle": "海外への第一歩に必要なすべて",
+    "japaneseLanguage": {
+      "title": "日本語コース",
+      "desc": "JLPT・TOPJ・NAT試験対策および全レベルの日本語コース。"
+    },
+    "studyInJapan": {
+      "title": "日本留学",
+      "desc": "ビザサポート付きの日本語学校・大学への進学支援。"
+    },
+    "studyInAustralia": {
+      "title": "オーストラリア留学",
+      "desc": "オーストラリアの大学への留学プログラムと進学支援。"
+    },
+    "visaServices": {
+      "title": "ビザサービス",
+      "desc": "留学・就労・研修ビザの申請サポート。"
+    }
+  },
+  "schools": {
+    "title": "提携校一覧",
+    "subtitle": "日本全国の認定校",
+    "filterAll": "すべて",
+    "filterLanguage": "日本語学校",
+    "filterUniversity": "大学",
+    "filterVocational": "専門学校",
+    "viewDetails": "詳細を見る",
+    "schoolsCount": "校"
+  },
+  "cities": {
+    "title": "提携都市",
+    "subtitle": "日本の活気ある都市で学ぶ",
+    "exploreCity": "詳細"
+  },
+  "howItWorks": {
+    "title": "ご利用の流れ",
+    "subtitle": "スリランカから日本へ — 3つのステップ",
+    "step1": { "title": "申し込み", "desc": "無料カウンセリングセッションに参加し、申請書を提出。" },
+    "step2": { "title": "マッチング", "desc": "目標と予算に合った学校とプログラムをご提案。" },
+    "step3": { "title": "留学開始", "desc": "ビザサポートと出発前ガイダンスを受けて日本へ。" }
+  },
+  "testimonials": {
+    "title": "卒業生の声",
+    "subtitle": "夢を実現した卒業生たちのストーリー"
+  },
+  "contact": {
+    "title": "留学の第一歩を踏み出そう",
+    "subtitle": "無料相談受付中 — 今すぐご連絡ください。",
+    "name": "お名前",
+    "email": "メールアドレス",
+    "phone": "電話番号",
+    "program": "ご希望のプログラム",
+    "programOptions": {
+      "japanese": "日本語コース",
+      "studyJapan": "日本留学",
+      "studyAustralia": "オーストラリア留学",
+      "visa": "ビザサービス"
+    },
+    "send": "送信する",
+    "address": "ガンパハ・プラーデーシャ・サバー・ビル、ミリスワッテ、ムドゥンゴダ、スリランカ",
+    "phone_number": "+94 33 2232 667",
+    "email_address": "japansrilanka67@gmail.com"
+  },
+  "footer": {
+    "tagline": "2002年よりスリランカの人材を世界へ。",
+    "quickLinks": "クイックリンク",
+    "contactInfo": "連絡先",
+    "followUs": "フォローする",
+    "rights": "All rights reserved."
+  },
+  "about": {
+    "title": "JSLTCCについて",
+    "hero": "2002年よりスリランカ人の夢を応援。",
+    "storyTitle": "私たちのストーリー",
+    "story": "日本スリランカ技術文化センター（JSLTCC）は2002年に設立されました。",
+    "missionTitle": "ミッション",
+    "mission": "高品質な日本語教育と海外留学支援を通じてスリランカの学生を支援する。",
+    "visionTitle": "ビジョン",
+    "vision": "日本とスリランカをつなぐ最高の教育機関として認められること。",
+    "teamTitle": "チーム",
+    "certTitle": "認定・提携"
+  },
+  "japaneseLanguage": {
+    "title": "日本語コース",
+    "hero": "初心者から上級者まで — 日本語をマスターしよう。",
+    "coursesTitle": "コース一覧",
+    "examsTitle": "試験対策",
+    "scheduleTitle": "クラス時間割"
+  },
+  "studyJapan": {
+    "title": "日本留学",
+    "hero": "あなたの日本留学はここから始まる。",
+    "processTitle": "申請プロセス",
+    "schoolsTitle": "提携校",
+    "citiesTitle": "提携都市"
+  },
+  "studyAustralia": {
+    "title": "オーストラリア留学",
+    "hero": "世界トップクラスの教育を受けよう。",
+    "programsTitle": "プログラム一覧"
+  },
+  "visaServices": {
+    "title": "ビザサービス",
+    "hero": "経験豊富なチームによるビザ申請サポート。",
+    "studentVisa": "学生ビザ",
+    "workingVisa": "就労ビザ",
+    "trainingVisa": "研修ビザ"
+  },
+  "activities": {
+    "title": "活動・イベント",
+    "hero": "文化・学習・成果を共に祝おう。"
+  }
+}

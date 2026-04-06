@@ -1,0 +1,138 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "japaneseLanguage": "Japanese Language",
+    "studyInJapan": "Study in Japan",
+    "studyInAustralia": "Study in Australia",
+    "visaServices": "Visa Services",
+    "activities": "Activities",
+    "contact": "Contact",
+    "enquireNow": "Enquire Now"
+  },
+  "hero": {
+    "headline": "Your Gateway to Japan & Beyond",
+    "subheadline": "Japan Sri Lanka Technology & Cultural Centre — Connecting Sri Lankan talent with opportunities in Japan and Australia since 2002.",
+    "explorePrograms": "Explore Programs",
+    "contactUs": "Contact Us"
+  },
+  "stats": {
+    "founded": "Founded",
+    "graduates": "Graduates",
+    "partnerSchools": "Partner Schools",
+    "destinations": "Study Destinations"
+  },
+  "services": {
+    "title": "Our Programs & Services",
+    "subtitle": "Everything you need to start your journey abroad",
+    "japaneseLanguage": {
+      "title": "Japanese Language",
+      "desc": "JLPT, TOPJ, NAT exam preparation and general Japanese language courses for all levels."
+    },
+    "studyInJapan": {
+      "title": "Study in Japan",
+      "desc": "Placement at top Japanese language schools and universities with full visa support."
+    },
+    "studyInAustralia": {
+      "title": "Study in Australia",
+      "desc": "Study abroad programs and university placement in Australia."
+    },
+    "visaServices": {
+      "title": "Visa Services",
+      "desc": "Student, working, and training visa assistance with experienced counsellors."
+    }
+  },
+  "schools": {
+    "title": "Our Partner Schools",
+    "subtitle": "A wide range of accredited institutions across Japan",
+    "filterAll": "All",
+    "filterLanguage": "Language Schools",
+    "filterUniversity": "Universities",
+    "filterVocational": "Vocational",
+    "viewDetails": "View Details",
+    "schoolsCount": "schools"
+  },
+  "cities": {
+    "title": "Our Partner Cities in Japan",
+    "subtitle": "Study in Japan's most vibrant cities",
+    "exploreCity": "Explore"
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Your journey from Sri Lanka to Japan in 3 simple steps",
+    "step1": { "title": "Apply", "desc": "Submit your application and attend a free counselling session with our experts." },
+    "step2": { "title": "Get Placed", "desc": "We match you with the right school and program based on your goals and budget." },
+    "step3": { "title": "Study Abroad", "desc": "Arrive in Japan with full visa support and pre-departure guidance from our team." }
+  },
+  "testimonials": {
+    "title": "Student Stories",
+    "subtitle": "Hear from our graduates who are living their dreams"
+  },
+  "contact": {
+    "title": "Ready to Start Your Journey?",
+    "subtitle": "Talk to our experts today — free consultation available.",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "program": "Program of Interest",
+    "programOptions": {
+      "japanese": "Japanese Language Course",
+      "studyJapan": "Study in Japan",
+      "studyAustralia": "Study in Australia",
+      "visa": "Visa Services"
+    },
+    "send": "Send Enquiry",
+    "address": "Gampaha Pradesiya Saba Building, Miriswatte, Mudungoda, Sri Lanka",
+    "phone_number": "+94 33 2232 667",
+    "email_address": "japansrilanka67@gmail.com"
+  },
+  "footer": {
+    "tagline": "Connecting Sri Lankan talent with the world since 2002.",
+    "quickLinks": "Quick Links",
+    "contactInfo": "Contact Info",
+    "followUs": "Follow Us",
+    "rights": "All rights reserved."
+  },
+  "about": {
+    "title": "About JSLTCC",
+    "hero": "Empowering Sri Lankans to reach Japan and beyond since 2002.",
+    "storyTitle": "Our Story",
+    "story": "The Japan Sri Lanka Technology & Cultural Centre (JSLTCC) was established in 2002 with a single mission: to bridge the gap between Sri Lankan students and world-class education opportunities in Japan. Over two decades, we have grown into a trusted institution, guiding more than 5,000 students through language training, university placements, and visa processes.",
+    "missionTitle": "Our Mission",
+    "mission": "To provide accessible, high-quality Japanese language education and overseas study placement services that empower Sri Lankan students to build global careers.",
+    "visionTitle": "Our Vision",
+    "vision": "To be the leading Japan-Sri Lanka educational bridge, recognized for quality, integrity, and the success of our graduates.",
+    "teamTitle": "Our Team",
+    "certTitle": "Accreditations & Partnerships"
+  },
+  "japaneseLanguage": {
+    "title": "Japanese Language Courses",
+    "hero": "Master Japanese — from beginner to exam-ready.",
+    "coursesTitle": "Available Courses",
+    "examsTitle": "Exam Preparation",
+    "scheduleTitle": "Class Schedule"
+  },
+  "studyJapan": {
+    "title": "Study in Japan",
+    "hero": "Your Japanese university journey starts here.",
+    "processTitle": "Application Process",
+    "schoolsTitle": "Partner Schools",
+    "citiesTitle": "Partner Cities"
+  },
+  "studyAustralia": {
+    "title": "Study in Australia",
+    "hero": "Open doors to world-class education in Australia.",
+    "programsTitle": "Available Programs"
+  },
+  "visaServices": {
+    "title": "Visa Services",
+    "hero": "Hassle-free visa assistance from our experienced team.",
+    "studentVisa": "Student Visa",
+    "workingVisa": "Working Visa",
+    "trainingVisa": "Training Visa"
+  },
+  "activities": {
+    "title": "Activities & Events",
+    "hero": "Celebrating culture, learning, and achievement together."
+  }
+}
