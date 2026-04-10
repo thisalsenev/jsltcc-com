@@ -18,7 +18,7 @@ export default function ServicesGrid() {
 
   return (
     <section id="programs" className="relative overflow-hidden">
-    <AppStoreMarquee bgColor="#0f172a">
+    <AppStoreMarquee>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-14">
