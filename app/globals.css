@@ -90,3 +90,16 @@ body {
 .aurora-3 { animation: aurora3 22s ease-in-out infinite; }
 .aurora-4 { animation: aurora4 18s ease-in-out infinite; }
 .aurora-5 { animation: aurora5 24s ease-in-out infinite; }
+
+/* ── AppStoreMarquee — infinite vertical scroll lanes ── */
+@keyframes marquee-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+@keyframes marquee-down {
+  from { transform: translateY(-50%); }
+  to   { transform: translateY(0); }
+}
+.animate-marquee-up   { animation: marquee-up   35s linear infinite; }
+.animate-marquee-down { animation: marquee-down 42s linear infinite; }
+.animate-marquee-up-fast { animation: marquee-up 28s linear infinite; }
