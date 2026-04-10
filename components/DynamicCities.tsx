@@ -35,7 +35,7 @@ export default function DynamicCities() {
   const currentPair = PAIRS[pairIndex];
 
   return (
-    <div className="pt-7 mt-8 border-t border-slate-100">
+    <div className="pt-7 mt-8 border-t border-white/10">
       <p className="text-sm text-slate-400 font-medium uppercase tracking-widest mb-5">
         Destination Cities
       </p>
@@ -52,17 +52,18 @@ export default function DynamicCities() {
           {currentPair.map((city) => (
             <div
               key={city.name}
-              className="inline-flex items-center gap-3 px-7 py-4 rounded-full text-lg font-semibold text-slate-700 border border-slate-200/80"
+              className="inline-flex items-center gap-3 px-7 py-4 rounded-full text-lg font-semibold text-white border border-white/15"
               style={{
-                background: "rgba(255,255,255,0.7)",
+                background: "rgba(255,255,255,0.07)",
                 backdropFilter: "blur(12px)",
                 WebkitBackdropFilter: "blur(12px)",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.8)",
+                boxShadow: "0 1px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)",
               }}
             >
               <span className="text-2xl">{city.flag}</span>
               <span>{city.name}</span>
               <span className="text-slate-400 font-normal text-sm">{city.country}</span>
+
             </div>
           ))}
         </motion.div>

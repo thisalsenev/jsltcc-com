@@ -85,6 +85,28 @@ body {
   100% { transform: translate(0px,  0px)   scale(1);    }
 }
 
+/* ── AnimatedTopoLines — slow independent drifts ── */
+@keyframes topo-drift-1 {
+  0%, 100% { transform: translate(0px,   0px);  }
+  50%       { transform: translate(28px,  12px); }
+}
+@keyframes topo-drift-2 {
+  0%, 100% { transform: translate(0px,    0px);  }
+  50%       { transform: translate(-32px, -18px); }
+}
+@keyframes topo-drift-3 {
+  0%, 100% { transform: translate(0px,  0px);   }
+  50%       { transform: translate(18px, -24px); }
+}
+@keyframes topo-drift-4 {
+  0%, 100% { transform: translate(0px,   0px);  }
+  50%       { transform: translate(-20px, 28px); }
+}
+.topo-layer-1 { animation: topo-drift-1 22s ease-in-out infinite; }
+.topo-layer-2 { animation: topo-drift-2 31s ease-in-out infinite; }
+.topo-layer-3 { animation: topo-drift-3 39s ease-in-out infinite; }
+.topo-layer-4 { animation: topo-drift-4 46s ease-in-out infinite; }
+
 .aurora-1 { animation: aurora1 20s ease-in-out infinite; }
 .aurora-2 { animation: aurora2 26s ease-in-out infinite; }
 .aurora-3 { animation: aurora3 22s ease-in-out infinite; }
