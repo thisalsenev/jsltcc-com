@@ -78,7 +78,7 @@ export default function AppStoreMarquee({
                   // aspect-[3/4] makes every tile the same height → perfect loop
                   className="w-full px-1.5 rounded-2xl shadow-2xl opacity-70 object-cover flex-shrink-0"
                   style={{
-                    aspectRatio: "3/4",
+                    aspectRatio: "1/1",
                     filter: "brightness(0.85) contrast(1.1)",
                   }}
                 />
