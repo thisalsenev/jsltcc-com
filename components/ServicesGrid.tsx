@@ -5,25 +5,32 @@ import { motion } from "framer-motion";
 import { BookOpen, Plane, Globe, FileText, ArrowRight } from "lucide-react";
 
 const services = [
-  { key: "japaneseLanguage", icon: BookOpen, href: "/japanese-language", color: "bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white" },
-  { key: "studyInJapan", icon: Plane, href: "/study-in-japan", color: "bg-red-50 text-[#c0392b] group-hover:bg-[#c0392b] group-hover:text-white" },
-  { key: "studyInAustralia", icon: Globe, href: "/study-in-australia", color: "bg-green-50 text-green-600 group-hover:bg-green-600 group-hover:text-white" },
-  { key: "visaServices", icon: FileText, href: "/visa-services", color: "bg-amber-50 text-amber-600 group-hover:bg-amber-600 group-hover:text-white" },
+  { key: "japaneseLanguage", icon: BookOpen, href: "/japanese-language",      iconClass: "bg-blue-500/20  text-blue-300  group-hover:bg-blue-500/35"  },
+  { key: "studyInJapan",     icon: Plane,    href: "/study-in-japan",          iconClass: "bg-red-500/20   text-red-300   group-hover:bg-red-500/35"   },
+  { key: "studyInUK",        icon: Globe,    href: "/study-in-united-kingdom", iconClass: "bg-green-500/20 text-green-300 group-hover:bg-green-500/35" },
+  { key: "visaServices",     icon: FileText, href: "/visa-services",           iconClass: "bg-amber-500/20 text-amber-300 group-hover:bg-amber-500/35" },
 ];
 
 export default function ServicesGrid() {
-  const t = useTranslations("services");
+  const t      = useTranslations("services");
   const locale = useLocale();
 
   return (
-    <section className="py-20 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="programs"
+      className="py-20 relative overflow-hidden animate-gradient-bg"
+    >
+      {/* Subtle depth blobs */}
+      <div className="absolute top-10 left-1/4 w-72 h-72 bg-[#c0392b]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-[#c0392b] font-semibold text-sm uppercase tracking-widest mb-2"
+            className="text-[#f87171] font-semibold text-sm uppercase tracking-widest mb-2"
           >
             What We Offer
           </motion.p>
@@ -31,7 +38,7 @@ export default function ServicesGrid() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl sm:text-4xl font-extrabold text-[#0f172a] mb-4"
+            className="text-3xl sm:text-4xl font-extrabold text-white mb-4"
           >
             {t("title")}
           </motion.h2>
@@ -39,7 +46,7 @@ export default function ServicesGrid() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-slate-500 max-w-xl mx-auto"
+            className="text-slate-400 max-w-xl mx-auto"
           >
             {t("subtitle")}
           </motion.p>
@@ -56,18 +63,23 @@ export default function ServicesGrid() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="group bg-white rounded-2xl p-7 shadow-sm hover:shadow-xl border border-slate-100 hover:border-transparent transition-all duration-300 hover:-translate-y-1 flex flex-col"
+                className="group rounded-2xl p-7 border border-white/10 hover:border-white/25 transition-all duration-300 hover:-translate-y-1 flex flex-col"
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                }}
               >
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-all duration-300 ${svc.color}`}>
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-all duration-300 ${svc.iconClass}`}>
                   <Icon size={22} />
                 </div>
-                <h3 className="font-bold text-[#0f172a] text-lg mb-2 group-hover:text-[#c0392b] transition-colors">
+                <h3 className="font-bold text-white text-lg mb-2 group-hover:text-[#f87171] transition-colors">
                   {t(`${svc.key}.title` as any)}
                 </h3>
-                <p className="text-slate-500 text-sm leading-relaxed flex-1">
+                <p className="text-slate-300 text-sm leading-relaxed flex-1">
                   {t(`${svc.key}.desc` as any)}
                 </p>
-                <div className="flex items-center gap-1 mt-5 text-[#c0392b] text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex items-center gap-1 mt-5 text-[#f87171] text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
                   Learn more <ArrowRight size={14} />
                 </div>
               </motion.a>

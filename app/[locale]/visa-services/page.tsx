@@ -1,4 +1,6 @@
-import { useTranslations } from "next-intl";
+"use client";
+
+import { useTranslations, useLocale } from "next-intl";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { GraduationCap, Briefcase, Award } from "lucide-react";
@@ -17,11 +19,13 @@ export default function VisaServicesPage() {
 
 function VisaContent() {
   const t = useTranslations("visaServices");
+  const locale = useLocale();
 
   const visas = [
     {
       icon: GraduationCap,
       title: t("studentVisa"),
+      program: "studentVisa",
       desc: "For students enrolled in Japanese language schools, colleges, or universities. We assist with all documentation, application forms, and embassy preparation.",
       requirements: ["Acceptance letter from a Japanese school", "Financial proof", "Passport copy", "Educational certificates", "Bank statements"],
       color: "bg-blue-50 border-blue-200",
@@ -30,6 +34,7 @@ function VisaContent() {
     {
       icon: Briefcase,
       title: t("workingVisa"),
+      program: "workingVisa",
       desc: "For those seeking employment in Japan. We help match you with employers and navigate the complex working visa requirements.",
       requirements: ["Job offer from a Japanese company", "Certificate of Eligibility (COE)", "Passport copy", "Educational & professional certificates"],
       color: "bg-green-50 border-green-200",
@@ -38,6 +43,7 @@ function VisaContent() {
     {
       icon: Award,
       title: t("trainingVisa"),
+      program: "trainingVisa",
       desc: "The Technical Intern Training Program visa — ideal for gaining practical skills in Japan. We work with approved sending organizations.",
       requirements: ["Approved sending organization", "Training plan documents", "Employer acceptance", "Health certificate"],
       color: "bg-amber-50 border-amber-200",
@@ -61,14 +67,14 @@ function VisaContent() {
             {visas.map((visa) => {
               const Icon = visa.icon;
               return (
-                <div key={visa.title} className={`rounded-2xl p-8 border ${visa.color}`}>
+                <div key={visa.title} className={`rounded-2xl p-8 border ${visa.color} flex flex-col`}>
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 ${visa.iconColor}`}>
                     <Icon size={22} />
                   </div>
                   <h2 className="font-bold text-[#0f172a] text-xl mb-3">{visa.title}</h2>
                   <p className="text-slate-600 text-sm leading-relaxed mb-6">{visa.desc}</p>
                   <h4 className="font-semibold text-[#0f172a] text-sm mb-3">Key Requirements:</h4>
-                  <ul className="space-y-2">
+                  <ul className="space-y-2 flex-1">
                     {visa.requirements.map((req) => (
                       <li key={req} className="flex items-start gap-2 text-sm text-slate-600">
                         <span className="w-1.5 h-1.5 bg-[#c0392b] rounded-full mt-1.5 shrink-0" />
@@ -76,9 +82,12 @@ function VisaContent() {
                       </li>
                     ))}
                   </ul>
-                  <button className="mt-6 w-full bg-[#0f172a] hover:bg-[#c0392b] text-white text-sm font-semibold py-2.5 rounded-lg transition-colors">
+                  <a
+                    href={`/${locale}/contact?program=${visa.program}`}
+                    className="mt-6 block text-center bg-[#0f172a] hover:bg-[#c0392b] text-white text-sm font-semibold py-2.5 rounded-lg transition-colors"
+                  >
                     Get Started
-                  </button>
+                  </a>
                 </div>
               );
             })}

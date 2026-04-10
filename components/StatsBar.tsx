@@ -47,8 +47,8 @@ export default function StatsBar() {
   const stats = [
     { value: 2002, suffix: "", label: t("founded") },
     { value: 5000, suffix: "+", label: t("graduates") },
-    { value: 40, suffix: "+", label: t("partnerSchools") },
-    { value: 6, suffix: "", label: t("destinations") },
+    { value: 20, suffix: "+", label: t("partnerSchools") },
+    { value: 2, suffix: "", label: t("destinations") },
   ];
 
   return (

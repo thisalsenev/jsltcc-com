@@ -1,13 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
-import { Send, MapPin, Phone, Mail } from "lucide-react";
+import { Send, MapPin, Phone, Mail, CheckCircle } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 export default function ContactCTA() {
   const t = useTranslations("contact");
+  const searchParams = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
+  const [program, setProgram] = useState("");
+  const formRef = useRef<HTMLDivElement>(null);
+
+  // Pre-select program from URL param e.g. ?program=japanese
+  useEffect(() => {
+    const p = searchParams.get("program");
+    if (p) {
+      setProgram(p);
+      // Scroll form into view smoothly
+      setTimeout(() => {
+        formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 300);
+    }
+  }, [searchParams]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,6 +85,7 @@ export default function ContactCTA() {
 
           {/* Right — form */}
           <motion.div
+            ref={formRef}
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -77,13 +94,14 @@ export default function ContactCTA() {
             {submitted ? (
               <div className="text-center py-10">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Send size={24} className="text-green-600" />
+                  <CheckCircle size={28} className="text-green-600" />
                 </div>
-                <h3 className="text-xl font-bold text-[#0f172a] mb-2">Message Sent!</h3>
-                <p className="text-slate-500 text-sm">We'll get back to you within 24 hours.</p>
+                <h3 className="text-xl font-bold text-[#0f172a] mb-2">Enquiry Sent!</h3>
+                <p className="text-slate-500 text-sm">Thank you! We'll get back to you within 24 hours.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
+                <h3 className="text-lg font-bold text-[#0f172a] mb-2">Send an Enquiry</h3>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">{t("name")}</label>
                   <input
@@ -116,14 +134,26 @@ export default function ContactCTA() {
                   <label className="block text-sm font-medium text-slate-700 mb-1">{t("program")}</label>
                   <select
                     required
+                    value={program}
+                    onChange={(e) => setProgram(e.target.value)}
                     className="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b]/30 focus:border-[#c0392b] bg-white"
                   >
                     <option value="">Select a program...</option>
                     <option value="japanese">{t("programOptions.japanese")}</option>
                     <option value="studyJapan">{t("programOptions.studyJapan")}</option>
-                    <option value="studyAustralia">{t("programOptions.studyAustralia")}</option>
-                    <option value="visa">{t("programOptions.visa")}</option>
+                    <option value="studyUK">{t("programOptions.studyUK")}</option>
+                    <option value="studentVisa">Student Visa</option>
+                    <option value="workingVisa">Working Visa</option>
+                    <option value="trainingVisa">Training Visa</option>
                   </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Message (optional)</label>
+                  <textarea
+                    rows={3}
+                    className="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#c0392b]/30 focus:border-[#c0392b] resize-none"
+                    placeholder="Any specific questions or requirements..."
+                  />
                 </div>
                 <button
                   type="submit"

@@ -4,22 +4,40 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, ExternalLink } from "lucide-react";
+import Image from "next/image";
 
 type FilterType = "all" | "language" | "university" | "vocational";
 
+const cityImages: Record<string, string> = {
+  Yokohama: "/images/cities/yokohama.jpg",
+  Tokyo: "/images/cities/tokyo.jpg",
+  Saitama: "/images/cities/saitama.jpg",
+  Nagoya: "/images/cities/Nagoya.webp",
+  Osaka: "/images/cities/Osaka.jpg",
+  Kobe: "/images/cities/kobe.jpg",
+  Hiroshima: "/images/cities/Hiroshima.jpg",
+  Sapporo: "/images/cities/sapporo.jpg",
+  Chiba: "/images/cities/Chiba .webp",
+  Nagano: "/images/cities/Nagano.jpg",
+};
+
 const schools = [
-  { id: 1, name: "Tokyo Language Institute", city: "Tokyo", type: "language", programs: ["JLPT N1-N5", "Business Japanese"], logo: "TLI" },
-  { id: 2, name: "Osaka International School", city: "Osaka", type: "language", programs: ["General Japanese", "JLPT Prep"], logo: "OIS" },
-  { id: 3, name: "Kyoto University of Arts", city: "Kyoto", type: "university", programs: ["Arts & Design", "Japanese Studies"], logo: "KUA" },
-  { id: 4, name: "Waseda Language Academy", city: "Tokyo", type: "language", programs: ["Academic Japanese", "JLPT N1-N3"], logo: "WLA" },
-  { id: 5, name: "Fukuoka Tech Institute", city: "Fukuoka", type: "vocational", programs: ["IT & Technology", "Engineering"], logo: "FTI" },
-  { id: 6, name: "Sapporo Japanese School", city: "Sapporo", type: "language", programs: ["General Japanese", "Cultural Exchange"], logo: "SJS" },
-  { id: 7, name: "Nagoya Business College", city: "Nagoya", type: "vocational", programs: ["Business Management", "Accounting"], logo: "NBC" },
-  { id: 8, name: "Kobe International University", city: "Kobe", type: "university", programs: ["Economics", "Engineering", "Science"], logo: "KIU" },
-  { id: 9, name: "Yokohama Language Center", city: "Yokohama", type: "language", programs: ["Intensive Japanese", "TOPJ Prep"], logo: "YLC" },
-  { id: 10, name: "Hiroshima Design School", city: "Hiroshima", type: "vocational", programs: ["Graphic Design", "Architecture"], logo: "HDS" },
-  { id: 11, name: "Sendai University", city: "Sendai", type: "university", programs: ["Science & Technology", "Medicine"], logo: "SU" },
-  { id: 12, name: "Nara Cultural Institute", city: "Nara", type: "language", programs: ["Traditional Japanese", "Culture & History"], logo: "NCI" },
+  { id: 1, name: "YIEA", city: "Yokohama", type: "language", programs: ["General Japanese", "JLPT Prep"], logo: "YI" },
+  { id: 2, name: "Arts College", city: "Yokohama", type: "language", programs: ["Japanese Language", "Cultural Studies"], logo: "AC" },
+  { id: 3, name: "Tokyo Meisei Japanese Language Academy", city: "Tokyo", type: "language", programs: ["JLPT N1-N5", "Intensive Japanese"], logo: "TM" },
+  { id: 4, name: "Funabashi Japanese Language Academy", city: "Saitama", type: "language", programs: ["General Japanese", "JLPT Prep"], logo: "FJ" },
+  { id: 15, name: "International Bridge Academy", city: "Saitama", type: "language", programs: ["Japanese Language"], logo: "IB" },
+  { id: 5, name: "Nagoya Advanced Academy of Japanese", city: "Nagoya", type: "language", programs: ["Advanced Japanese", "JLPT N1-N2"], logo: "NA" },
+  { id: 6, name: "JP Education Academy", city: "Nagoya", type: "language", programs: ["General Japanese", "NAT Test Prep"], logo: "JP" },
+  { id: 7, name: "Umikaze Academy of Japanese", city: "Osaka", type: "language", programs: ["General Japanese", "TOPJ Prep"], logo: "UA" },
+  { id: 8, name: "Osaka Christian College", city: "Osaka", type: "language", programs: ["Japanese Language", "Cultural Exchange"], logo: "OC" },
+  { id: 16, name: "AIUEO International School", city: "Nagoya", type: "language", programs: ["Japanese Language"], logo: "AU" },
+  { id: 9, name: "Asia International Center", city: "Kobe", type: "language", programs: ["General Japanese", "JLPT Prep"], logo: "AI" },
+  { id: 10, name: "Kaisei Academy Japanese Language School", city: "Kobe", type: "language", programs: ["Intensive Japanese", "NAT Test Prep"], logo: "KA" },
+  { id: 11, name: "Narashino Institute of Foreign Languages", city: "Chiba", type: "language", programs: ["General Japanese", "JLPT Prep"], logo: "NI" },
+  { id: 12, name: "Japan International Institute of Cybernetics", city: "Tokyo", type: "language", programs: ["Japanese Language", "Technology"], logo: "JI" },
+  { id: 13, name: "YIEA Tokyo", city: "Tokyo", type: "language", programs: ["General Japanese", "JLPT Prep"], logo: "YT" },
+  { id: 14, name: "ISI Language School", city: "Nagano", type: "language", programs: ["General Japanese", "Intensive Japanese"], logo: "IS" },
 ];
 
 const typeColors: Record<string, string> = {
@@ -35,8 +53,6 @@ export default function SchoolsSection() {
   const filters: { key: FilterType; label: string }[] = [
     { key: "all", label: t("filterAll") },
     { key: "language", label: t("filterLanguage") },
-    { key: "university", label: t("filterUniversity") },
-    { key: "vocational", label: t("filterVocational") },
   ];
 
   const filtered = activeFilter === "all" ? schools : schools.filter((s) => s.type === activeFilter);
@@ -97,52 +113,73 @@ export default function SchoolsSection() {
         {/* Schools Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           <AnimatePresence mode="popLayout">
-            {filtered.map((school, i) => (
-              <motion.div
-                key={school.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.2, delay: i * 0.03 }}
-                className="group bg-white border border-slate-200 rounded-2xl p-5 hover:border-[#c0392b]/40 hover:shadow-lg transition-all duration-300 cursor-pointer"
-              >
-                {/* Logo placeholder */}
-                <div className="w-12 h-12 bg-[#0f172a] rounded-xl flex items-center justify-center text-white font-bold text-sm mb-4">
-                  {school.logo}
-                </div>
+            {filtered.map((school, i) => {
+              const cityImg = cityImages[school.city];
+              return (
+                <motion.div
+                  key={school.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.2, delay: i * 0.03 }}
+                  className="group relative rounded-2xl overflow-hidden border border-slate-200 hover:border-[#c0392b]/40 hover:shadow-xl transition-all duration-300 cursor-pointer"
+                >
+                  {/* City background image */}
+                  {cityImg && (
+                    <div className="absolute inset-0">
+                      <Image
+                        src={cityImg}
+                        alt={school.city}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      />
+                      {/* Dark overlay */}
+                      <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300" />
+                    </div>
+                  )}
 
-                {/* Type badge */}
-                <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${typeColors[school.type]}`}>
-                  {school.type.charAt(0).toUpperCase() + school.type.slice(1)}
-                </span>
+                  {/* Content — white frosted stage */}
+                  <div className="relative z-10 p-5">
+                    {/* Logo */}
+                    <div className="w-11 h-11 bg-white rounded-xl flex items-center justify-center text-[#0f172a] font-bold text-sm mb-4 shadow-md">
+                      {school.logo}
+                    </div>
 
-                {/* Name */}
-                <h3 className="font-bold text-[#0f172a] mt-2 mb-1 group-hover:text-[#c0392b] transition-colors leading-snug">
-                  {school.name}
-                </h3>
-
-                {/* Location */}
-                <div className="flex items-center gap-1 text-slate-400 text-xs mb-3">
-                  <MapPin size={11} />
-                  {school.city}, Japan
-                </div>
-
-                {/* Programs */}
-                <div className="flex flex-wrap gap-1 mb-4">
-                  {school.programs.map((p) => (
-                    <span key={p} className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">
-                      {p}
+                    {/* Type badge */}
+                    <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${typeColors[school.type]}`}>
+                      {school.type.charAt(0).toUpperCase() + school.type.slice(1)}
                     </span>
-                  ))}
-                </div>
 
-                {/* View Details */}
-                <button className="flex items-center gap-1 text-[#c0392b] text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                  {t("viewDetails")} <ExternalLink size={13} />
-                </button>
-              </motion.div>
-            ))}
+                    {/* Name + location — frosted white box */}
+                    <div className="mt-3 mb-3 bg-white/90 backdrop-blur-sm rounded-xl px-3 py-2.5 shadow-sm">
+                      <h3 className="font-bold text-[#0f172a] text-sm leading-snug group-hover:text-[#c0392b] transition-colors">
+                        {school.name}
+                      </h3>
+                      <div className="flex items-center gap-1 text-slate-500 text-xs mt-1">
+                        <MapPin size={10} />
+                        {school.city}, Japan
+                      </div>
+                    </div>
+
+                    {/* Programs */}
+                    <div className="flex flex-wrap gap-1 mb-3">
+                      {school.programs.map((p) => (
+                        <span key={p} className="text-xs bg-white/80 backdrop-blur-sm text-slate-700 px-2 py-0.5 rounded-md font-medium shadow-sm">
+                          {p}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* View Details */}
+                    <button className="flex items-center gap-1 text-white text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                      {t("viewDetails")} <ExternalLink size={12} />
+                    </button>
+                  </div>
+                </motion.div>
+              );
+            })}
           </AnimatePresence>
         </div>
 

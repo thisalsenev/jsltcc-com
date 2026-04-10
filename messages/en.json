@@ -4,7 +4,7 @@
     "about": "About",
     "japaneseLanguage": "Japanese Language",
     "studyInJapan": "Study in Japan",
-    "studyInAustralia": "Study in Australia",
+    "studyInUK": "Study in United Kingdom",
     "visaServices": "Visa Services",
     "activities": "Activities",
     "contact": "Contact",
@@ -12,7 +12,7 @@
   },
   "hero": {
     "headline": "Your Gateway to Japan & Beyond",
-    "subheadline": "Japan Sri Lanka Technology & Cultural Centre — Connecting Sri Lankan talent with opportunities in Japan and Australia since 2002.",
+    "subheadline": "Japan Sri Lanka Technology & Cultural Centre — Connecting Sri Lankan talent with opportunities in Japan and the United Kingdom since 2002.",
     "explorePrograms": "Explore Programs",
     "contactUs": "Contact Us"
   },
@@ -33,9 +33,9 @@
       "title": "Study in Japan",
       "desc": "Placement at top Japanese language schools and universities with full visa support."
     },
-    "studyInAustralia": {
-      "title": "Study in Australia",
-      "desc": "Study abroad programs and university placement in Australia."
+    "studyInUK": {
+      "title": "Study in United Kingdom",
+      "desc": "Study abroad programs and university placement across the UK."
     },
     "visaServices": {
       "title": "Visa Services",
@@ -78,7 +78,7 @@
     "programOptions": {
       "japanese": "Japanese Language Course",
       "studyJapan": "Study in Japan",
-      "studyAustralia": "Study in Australia",
+      "studyUK": "Study in United Kingdom",
       "visa": "Visa Services"
     },
     "send": "Send Enquiry",
@@ -119,9 +119,9 @@
     "schoolsTitle": "Partner Schools",
     "citiesTitle": "Partner Cities"
   },
-  "studyAustralia": {
-    "title": "Study in Australia",
-    "hero": "Open doors to world-class education in Australia.",
+  "studyUK": {
+    "title": "Study in the United Kingdom",
+    "hero": "Open doors to world-class education in the UK.",
     "programsTitle": "Available Programs"
   },
   "visaServices": {

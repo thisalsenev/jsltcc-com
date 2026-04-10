@@ -31,3 +31,62 @@ body {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #f1f5f9; }
 ::-webkit-scrollbar-thumb { background: #c0392b; border-radius: 3px; }
+
+/* Animated gradient background for Services section */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-bg {
+  background: linear-gradient(
+    135deg,
+    #0f172a 0%,
+    #1e293b 20%,
+    #3b1a1a 40%,
+    #1a1a3b 60%,
+    #1e293b 80%,
+    #0f172a 100%
+  );
+  background-size: 300% 300%;
+  animation: gradientShift 8s ease infinite;
+}
+
+/* Hero aurora blob animations */
+@keyframes aurora1 {
+  0%   { transform: translate(0px,   0px)   scale(1);    }
+  25%  { transform: translate(-80px, 60px)  scale(1.12); }
+  50%  { transform: translate(60px,  -80px) scale(0.92); }
+  75%  { transform: translate(90px,  50px)  scale(1.08); }
+  100% { transform: translate(0px,   0px)   scale(1);    }
+}
+@keyframes aurora2 {
+  0%   { transform: translate(0px,   0px)   scale(1);    }
+  30%  { transform: translate(100px, -60px) scale(1.15); }
+  60%  { transform: translate(-70px, 80px)  scale(0.88); }
+  100% { transform: translate(0px,   0px)   scale(1);    }
+}
+@keyframes aurora3 {
+  0%   { transform: translate(0px,   0px)   scale(1);    }
+  40%  { transform: translate(-90px, -50px) scale(1.1);  }
+  80%  { transform: translate(60px,  70px)  scale(0.95); }
+  100% { transform: translate(0px,   0px)   scale(1);    }
+}
+@keyframes aurora4 {
+  0%   { transform: translate(0px,   0px)   scale(1);    }
+  50%  { transform: translate(-60px, -90px) scale(1.2);  }
+  100% { transform: translate(0px,   0px)   scale(1);    }
+}
+@keyframes aurora5 {
+  0%   { transform: translate(0px,  0px)   scale(1);    }
+  35%  { transform: translate(70px, 60px)  scale(1.1);  }
+  70%  { transform: translate(-50px, -40px) scale(0.9); }
+  100% { transform: translate(0px,  0px)   scale(1);    }
+}
+
+.aurora-1 { animation: aurora1 20s ease-in-out infinite; }
+.aurora-2 { animation: aurora2 26s ease-in-out infinite; }
+.aurora-3 { animation: aurora3 22s ease-in-out infinite; }
+.aurora-4 { animation: aurora4 18s ease-in-out infinite; }
+.aurora-5 { animation: aurora5 24s ease-in-out infinite; }

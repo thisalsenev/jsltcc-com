@@ -46,13 +46,13 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <div className="relative w-10 h-10 shrink-0">
+              <div className="relative w-12 h-14 shrink-0">
                 <Image
-                  src="/images/logo/JSLTCC LOGO.png"
+                  src="/images/logo/JSLTCC LOGO.jpeg"
                   alt="JSLTCC Logo"
                   fill
-                  className="object-contain"
-                  sizes="40px"
+                  className="object-contain rounded-sm"
+                  sizes="48px"
                 />
               </div>
               <div>
@@ -127,7 +127,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li><a href={`/${locale}/japanese-language`} className="hover:text-white transition-colors">Japanese Language (JLPT, TOPJ, NAT)</a></li>
               <li><a href={`/${locale}/study-in-japan`} className="hover:text-white transition-colors">Study in Japan</a></li>
-              <li><a href={`/${locale}/study-in-australia`} className="hover:text-white transition-colors">Study in Australia</a></li>
+              <li><a href={`/${locale}/study-in-united-kingdom`} className="hover:text-white transition-colors">Study in United Kingdom</a></li>
               <li><a href={`/${locale}/visa-services`} className="hover:text-white transition-colors">Student Visa</a></li>
               <li><a href={`/${locale}/visa-services`} className="hover:text-white transition-colors">Working Visa</a></li>
               <li><a href={`/${locale}/visa-services`} className="hover:text-white transition-colors">Training Visa</a></li>

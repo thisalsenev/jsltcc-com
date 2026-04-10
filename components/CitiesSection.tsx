@@ -20,7 +20,7 @@ const cities = [
     region: "Kansai",
     schools: 8,
     description: "Japan's kitchen — vibrant culture and great student life.",
-    image: "/images/cities/osaka.jpeg",
+    image: "/images/cities/Osaka.jpg",
   },
   {
     name: "Hiroshima",
@@ -28,7 +28,7 @@ const cities = [
     region: "Chugoku",
     schools: 3,
     description: "A city of resilience, peace, and modern opportunity.",
-    image: "/images/cities/hiroshima.jpeg",
+    image: "/images/cities/Hiroshima.jpg",
   },
   {
     name: "Sapporo",
@@ -44,7 +44,7 @@ const cities = [
     region: "Chubu",
     schools: 5,
     description: "Japan's industrial hub with world-class vocational schools.",
-    image: "/images/cities/nagoya.jpeg",
+    image: "/images/cities/Nagoya.webp",
   },
   {
     name: "Kobe",
@@ -68,7 +68,7 @@ const cities = [
     region: "Kanto",
     schools: 3,
     description: "Close to Tokyo with a relaxed pace and growing student scene.",
-    image: "/images/cities/chiba.jpeg",
+    image: "/images/cities/Chiba .webp",
   },
   {
     name: "Saitama",
