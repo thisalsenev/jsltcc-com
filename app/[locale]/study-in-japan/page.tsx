@@ -3,6 +3,19 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SchoolsSection from "@/components/SchoolsSection";
 import CitiesSection from "@/components/CitiesSection";
+import AppStoreMarquee from "@/components/AppStoreMarquee";
+
+const JAPAN_IMAGES = [
+  "/images/japan/0M7nX.jpg",
+  "/images/japan/7gZM3.jpg",
+  "/images/japan/Hrouy.jpg",
+  "/images/japan/RCwIW.jpg",
+  "/images/japan/jO75t.jpg",
+  "/images/japan/jbrmq.jpg",
+  "/images/japan/jcysE.jpg",
+  "/images/japan/kMulQ.jpg",
+  "/images/japan/qvINr.jpg",
+];
 
 export default function StudyInJapanPage() {
   return (
@@ -30,13 +43,13 @@ function StudyJapanContent() {
 
   return (
     <>
-      <section className="bg-[#0f172a] py-24 px-4">
+      <AppStoreMarquee images={JAPAN_IMAGES}>
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-[#c0392b] font-semibold text-sm uppercase tracking-widest mb-3">Study Abroad</p>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-5">{t("title")}</h1>
           <p className="text-slate-300 text-lg">{t("hero")}</p>
         </div>
-      </section>
+      </AppStoreMarquee>
 
       {/* Process */}
       <section className="py-20 bg-white">

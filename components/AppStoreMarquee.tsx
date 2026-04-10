@@ -2,8 +2,8 @@
 
 import React, { ReactNode } from "react";
 
-// ── Real city photos from /public/images/cities ─────────────────────────────
-const IMAGES = [
+// ── Default photos (used by the Programs/Services section) ───────────────────
+const DEFAULT_IMAGES = [
   "/images/cities/tokyo.jpg",
   "/images/cities/Osaka.jpg",
   "/images/cities/sapporo.jpg",
@@ -14,39 +14,40 @@ const IMAGES = [
   "/images/cities/Nagoya.webp",
 ];
 
-// Duplicate for seamless infinite loop (translateY(-50%) lands exactly on frame 1)
-const doubled  = [...IMAGES, ...IMAGES];
-const reversed = [...doubled].reverse();
-
-// ── Lane config ───────────────────────────────────────────────────────────────
-const LANES = [
-  { images: doubled,  direction: "up",   duration: "40s" },
-  { images: reversed, direction: "down", duration: "48s" },
-  { images: doubled,  direction: "up",   duration: "35s" },
-  { images: reversed, direction: "down", duration: "45s" },
-  { images: doubled,  direction: "up",   duration: "38s" },
-];
+// ── Lane timing config ────────────────────────────────────────────────────────
+const LANE_DURATIONS = ["40s", "48s", "35s", "45s", "38s"];
 
 // ── Props ─────────────────────────────────────────────────────────────────────
 interface AppStoreMarqueeProps {
-  /** Your Programs/Services cards (or any content) rendered above the animation */
+  /** Cards, headings, or any content rendered above the animation */
   children?: ReactNode;
+  /** Pass your own image paths to override the default city photos */
+  images?: string[];
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
-export default function AppStoreMarquee({ children }: AppStoreMarqueeProps) {
+export default function AppStoreMarquee({ children, images }: AppStoreMarqueeProps) {
+  const imgs    = images ?? DEFAULT_IMAGES;
+  const doubled = [...imgs, ...imgs];
+  const reversed = [...doubled].reverse();
+
+  // Lanes alternate up/down; even indices use original order, odd use reversed
+  const lanes = LANE_DURATIONS.map((duration, i) => ({
+    images:    i % 2 === 0 ? doubled : reversed,
+    direction: i % 2 === 0 ? "up"    : "down",
+    duration,
+  }));
+
   return (
     <section className="relative w-full min-h-[800px] overflow-hidden bg-[#1a140f] py-24 flex items-center justify-center">
 
-      {/* ── Master wrapper
-            150% × 200% ensures the rotated panel bleeds past all four edges
-            so there is never a visible corner gap.                          ── */}
+      {/* ── Master wrapper: 150×200% + rotate(15deg) so corners never show ── */}
       <div
         aria-hidden="true"
         className="absolute top-1/2 left-1/2 w-[150%] h-[200%] z-0 flex gap-4 md:gap-6 pointer-events-none"
         style={{ transform: "translate(-50%, -50%) rotate(15deg)" }}
       >
-        {LANES.map((lane, laneIdx) => (
+        {lanes.map((lane, laneIdx) => (
           <div key={laneIdx} className="flex-1 h-full relative overflow-hidden">
             <div
               className={`flex flex-col gap-4 md:gap-6 h-[200%] w-full ${
@@ -69,7 +70,7 @@ export default function AppStoreMarquee({ children }: AppStoreMarqueeProps) {
         ))}
       </div>
 
-      {/* ── Warm golden tint (mix-blend-mode: multiply) ── */}
+      {/* ── Warm golden tint ── */}
       <div
         aria-hidden="true"
         className="absolute inset-0 z-[1] pointer-events-none"
