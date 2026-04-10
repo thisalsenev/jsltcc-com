@@ -23,10 +23,18 @@ interface AppStoreMarqueeProps {
   children?: ReactNode;
   /** Pass your own image paths to override the default city photos */
   images?: string[];
+  /** Tailwind height + padding classes — controls the banner size.
+   *  Defaults to 'min-h-[400px] py-12' for inner pages.
+   *  Use 'min-h-[800px] py-24' to restore the full Programs section size. */
+  className?: string;
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
-export default function AppStoreMarquee({ children, images }: AppStoreMarqueeProps) {
+export default function AppStoreMarquee({
+  children,
+  images,
+  className = "min-h-[400px] py-12",
+}: AppStoreMarqueeProps) {
   const imgs    = images ?? DEFAULT_IMAGES;
   const doubled = [...imgs, ...imgs];
   const reversed = [...doubled].reverse();
@@ -39,7 +47,7 @@ export default function AppStoreMarquee({ children, images }: AppStoreMarqueePro
   }));
 
   return (
-    <section className="relative w-full min-h-[800px] overflow-hidden bg-[#1a140f] py-24 flex items-center justify-center">
+    <section className={`relative w-full overflow-hidden bg-[#1a140f] flex items-center justify-center ${className}`}>
 
       {/* ── Master wrapper: 150×200% + rotate(15deg) so corners never show ── */}
       <div
