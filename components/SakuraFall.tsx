@@ -11,7 +11,7 @@ export default function SakuraFall() {
   useEffect(() => {
     const generatedPetals = Array.from({ length: 30 }).map((_, i) => ({
       id: i,
-      left: `${random(40, 95)}vw`,
+      left: `${random(2, 98)}vw`,
       scale: random(0.4, 1.2),
       duration: random(10, 20),
       delay: random(0, 15),
