@@ -12,6 +12,9 @@ const DEFAULT_IMAGES = [
   "/images/cities/kobe.jpg",
   "/images/cities/Nagano.jpg",
   "/images/cities/Nagoya.webp",
+  "/images/cities/london.jpg",
+  "/images/cities/birmingham.jpg",
+  "/images/cities/Manchester.jpg",
 ];
 
 // ── 6 lanes, staggered durations ─────────────────────────────────────────────
