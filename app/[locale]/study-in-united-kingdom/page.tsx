@@ -1,6 +1,20 @@
 import { useTranslations } from "next-intl";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AppStoreMarquee from "@/components/AppStoreMarquee";
+
+// Folder name has a space → URL-encode as %20
+const UK_IMAGES = [
+  "/images/united%20kingdom/NLTyQ.jpg",
+  "/images/united%20kingdom/VsXou.jpg",
+  "/images/united%20kingdom/XTQI1.jpg",
+  "/images/united%20kingdom/opYlJ.jpg",
+  "/images/united%20kingdom/tC2S7.jpg",
+  "/images/united%20kingdom/uCUIz.jpg",
+  "/images/united%20kingdom/7gZM3%20copy.jpg",
+  "/images/united%20kingdom/jcysE%20copy.jpg",
+  "/images/united%20kingdom/qvINr%20copy.jpg",
+];
 
 export default function StudyUKPage() {
   return (
@@ -33,13 +47,13 @@ function StudyUKContent() {
 
   return (
     <>
-      <section className="bg-[#0f172a] py-24 px-4">
+      <AppStoreMarquee images={UK_IMAGES}>
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-[#c0392b] font-semibold text-sm uppercase tracking-widest mb-3">Study Abroad</p>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-5">{t("title")}</h1>
           <p className="text-slate-300 text-lg">{t("hero")}</p>
         </div>
-      </section>
+      </AppStoreMarquee>
 
       <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
