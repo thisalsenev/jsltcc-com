@@ -47,7 +47,7 @@ export default function GlobeViz() {
 
     // 5. INITIALIZE VANILLA THREE-GLOBE
     // Flat unlit material — ignores all scene lighting so it blends into the hero background
-    const coreMaterial = new THREE.MeshBasicMaterial({ color: 0xf8fafc });
+    const coreMaterial = new THREE.MeshBasicMaterial({ color: 0xd4dce8 });
 
     const Globe = new ThreeGlobe()
       .showGlobe(true)
