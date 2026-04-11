@@ -52,13 +52,13 @@ export default function StatsBar() {
   ];
 
   return (
-    <section className="bg-white border-b border-slate-100 py-16">
+    <section className="bg-[#0f172a] border-b border-white/10 py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center gap-2">
               <Counter end={stat.value} suffix={stat.suffix} />
-              <div className="text-slate-500 font-medium text-sm uppercase tracking-wider">
+              <div className="text-slate-400 font-medium text-sm uppercase tracking-wider">
                 {stat.label}
               </div>
             </div>
