@@ -47,7 +47,7 @@ export default function GlobeViz() {
 
     // 5. INITIALIZE VANILLA THREE-GLOBE
     // Flat unlit material — ignores all scene lighting so it blends into the hero background
-    const coreMaterial = new THREE.MeshBasicMaterial({ color: 0xd4dce8 });
+    const coreMaterial = new THREE.MeshBasicMaterial({ color: 0x0a191e });
 
     const Globe = new ThreeGlobe()
       .showGlobe(true)
@@ -81,7 +81,7 @@ export default function GlobeViz() {
           })
           .hexPolygonMargin(0.6)
           .hexPolygonAltitude(0.005) // Keeps them elevated above the solid core
-          .hexPolygonColor(() => "#cbd5e1"); // Silver frosty dots
+          .hexPolygonColor(() => "#8bb4f7"); // Glowing light blue dots
       });
 
     Globe.position.y = 15;
