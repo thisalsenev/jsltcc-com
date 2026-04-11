@@ -100,8 +100,8 @@ export default function GlobeViz() {
 
     // 7. THE ANIMATION LOOP & WAYPOINTS
     let animationFrameId: number;
+    let isVisible = true; // controlled by IntersectionObserver below
 
-    // Exact coordinates converted to 3D radians (X = tilt up/down, Y = pan left/right)
     const waypoints = [
       { x: 0.12, y: -1.39 }, // Colombo
       { x: 0.90, y: 0.00 },  // London
@@ -112,22 +112,20 @@ export default function GlobeViz() {
     let currentBaseY = waypoints[0].y;
 
     const renderLoop = () => {
-      // 1. Determine which city we should be looking at based on the time
+      // Only consume GPU cycles while the globe is visible in the viewport
+      if (!isVisible) return;
+
       const time = Date.now();
-      const cycleDuration = 6000; // Hover on each city area for roughly 6 seconds
+      const cycleDuration = 6000;
       const index = Math.floor(time / cycleDuration) % waypoints.length;
       const targetWaypoint = waypoints[index];
 
-      // 2. Smoothly glide the base rotation diagonally toward the active waypoint
-      // The 0.005 multiplier makes it a buttery-slow, majestic pan
       currentBaseX += (targetWaypoint.x - currentBaseX) * 0.005;
       currentBaseY += (targetWaypoint.y - currentBaseY) * 0.005;
 
-      // 3. Calculate Mouse Parallax overrides
-      const mouseTiltX = mouseY * 0.5; // Mouse vertical controls X-axis tilt
-      const mousePanY  = mouseX * 0.5; // Mouse horizontal controls Y-axis pan
+      const mouseTiltX = mouseY * 0.5;
+      const mousePanY  = mouseX * 0.5;
 
-      // 4. Combine the cinematic flight path with the mouse interaction
       Globe.rotation.x += ((currentBaseX + mouseTiltX) - Globe.rotation.x) * 0.05;
       Globe.rotation.y += ((currentBaseY + mousePanY)  - Globe.rotation.y) * 0.05;
 
@@ -135,6 +133,22 @@ export default function GlobeViz() {
       animationFrameId = requestAnimationFrame(renderLoop);
     };
     renderLoop();
+
+    // Pause RAF when globe scrolls out of view; resume when it re-enters
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          isVisible = true;
+          // Restart the loop — it stopped itself when isVisible went false
+          renderLoop();
+        } else {
+          isVisible = false;
+          cancelAnimationFrame(animationFrameId);
+        }
+      },
+      { threshold: 0 }
+    );
+    if (mountRef.current) observer.observe(mountRef.current);
 
     // 8. HANDLE WINDOW RESIZE
     const handleResize = () => {
@@ -150,11 +164,11 @@ export default function GlobeViz() {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
       cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
       if (mountRef.current && renderer.domElement) {
         mountRef.current.removeChild(renderer.domElement);
       }
       renderer.dispose();
-      // ThreeGlobe does not expose a dispose() method
     };
   }, []);
 

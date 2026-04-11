@@ -79,6 +79,8 @@ export default function AppStoreMarquee({
                   alt=""
                   // px-1.5 shrinks each tile slightly within its lane
                   // aspect-[3/4] makes every tile the same height → perfect loop
+                  loading="lazy"
+                  decoding="async"
                   className="w-full px-1.5 rounded-2xl shadow-2xl opacity-70 object-cover flex-shrink-0"
                   style={{
                     aspectRatio: "1/1",
