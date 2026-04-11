@@ -2,12 +2,12 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 
-// ── Animated counter (unchanged) ─────────────────────────────────────────────
+// ── Animated counter ──────────────────────────────────────────────────────────
 function Counter({ end, suffix = "" }: { end: number; suffix?: string }) {
   const [count, setCount] = useState(0);
-  const ref    = useRef<HTMLDivElement>(null);
+  const ref     = useRef<HTMLDivElement>(null);
   const started = useRef(false);
 
   useEffect(() => {
@@ -16,8 +16,7 @@ function Counter({ end, suffix = "" }: { end: number; suffix?: string }) {
         if (entry.isIntersecting && !started.current) {
           started.current = true;
           let start = 0;
-          const duration = 2000;
-          const step = (end / duration) * 16;
+          const step = (end / 2000) * 16;
           const timer = setInterval(() => {
             start += step;
             if (start >= end) { setCount(end); clearInterval(timer); }
@@ -38,77 +37,78 @@ function Counter({ end, suffix = "" }: { end: number; suffix?: string }) {
   );
 }
 
-// ── Particle type ─────────────────────────────────────────────────────────────
+// ── Particle shape ────────────────────────────────────────────────────────────
 interface Particle {
-  id:       number;
-  left:     number;   // % across the container width
-  duration: number;   // seconds
-  delay:    number;   // seconds
-  gold:     boolean;  // true = warm gold, false = tech cyan
+  id: number; left: number; duration: number; delay: number; gold: boolean;
 }
 
 // ── StatsBar ──────────────────────────────────────────────────────────────────
 export default function StatsBar() {
   const t = useTranslations("stats");
 
-  // Generate particles client-side only — avoids SSR/hydration mismatch
+  // useInView on the section itself — large target, 100% reliable trigger
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView   = useInView(sectionRef, { once: false, amount: 0.2 });
+
+  // Increment animKey each time the section enters view to remount particles
+  const [animKey, setAnimKey] = useState(0);
+  useEffect(() => {
+    if (isInView) setAnimKey(k => k + 1);
+  }, [isInView]);
+
+  // Particles generated once on mount (client-only — avoids SSR hydration mismatch)
   const [particles, setParticles] = useState<Particle[]>([]);
   useEffect(() => {
     setParticles(
       Array.from({ length: 28 }, (_, i) => ({
         id:       i,
-        left:     2 + Math.random() * 96,          // 2 – 98 %
-        duration: 0.55 + Math.random() * 0.65,     // 0.55 – 1.2 s
-        delay:    Math.random() * 0.9,             // 0 – 0.9 s stagger
-        gold:     Math.random() > 0.55,            // ~45 % cyan, ~55 % gold
+        left:     2 + Math.random() * 96,
+        duration: 0.55 + Math.random() * 0.65,
+        delay:    Math.random() * 0.9,
+        gold:     Math.random() > 0.55,
       }))
     );
   }, []);
 
   const stats = [
-    { value: 2002, suffix: "",  label: t("founded")       },
-    { value: 5000, suffix: "+", label: t("graduates")     },
+    { value: 2002, suffix: "",  label: t("founded")        },
+    { value: 5000, suffix: "+", label: t("graduates")      },
     { value: 20,   suffix: "+", label: t("partnerSchools") },
-    { value: 2,    suffix: "",  label: t("destinations")  },
+    { value: 2,    suffix: "",  label: t("destinations")   },
   ];
 
   return (
-    // relative + overflow-hidden contain the particles to this section
-    <section className="relative overflow-hidden bg-[#0f172a] border-b border-white/10 py-16">
+    <section
+      ref={sectionRef}
+      className="relative overflow-hidden bg-[#0f172a] border-b border-white/10 py-16"
+    >
+      {/* ── z-[1] Particle layer — driven by section-level useInView ── */}
+      <AnimatePresence>
+        {isInView && particles.map((p) => (
+          <motion.div
+            key={`${animKey}-${p.id}`}
+            className="absolute top-0 z-[1] pointer-events-none"
+            style={{ left: `${p.left}%` }}
+            initial={{ y: -40, opacity: 0 }}
+            animate={{ y: 180, opacity: [0, 1, 1, 0] }}
+            transition={{ duration: p.duration, delay: p.delay, ease: "easeIn" }}
+          >
+            <div
+              style={{
+                width:        "1.5px",
+                height:       "32px",
+                borderRadius: "9999px",
+                background:   p.gold ? "rgba(197,160,89,0.95)"   : "rgba(139,180,247,0.95)",
+                boxShadow:    p.gold
+                  ? "0 0 6px 2px rgba(197,160,89,0.7),  0 0 14px 4px rgba(197,160,89,0.3)"
+                  : "0 0 6px 2px rgba(139,180,247,0.7), 0 0 14px 4px rgba(139,180,247,0.3)",
+              }}
+            />
+          </motion.div>
+        ))}
+      </AnimatePresence>
 
-      {/* ── z-[0] Particle layer ── */}
-      {particles.map((p) => (
-        <motion.div
-          key={p.id}
-          className="absolute top-0 pointer-events-none"
-          style={{ left: `${p.left}%`, zIndex: 0 }}
-          initial={{ y: -40, opacity: 0 }}
-          whileInView={{ y: 180, opacity: [0, 1, 1, 0] }}
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{
-            duration: p.duration,
-            delay:    p.delay,
-            ease:     "easeIn",
-          }}
-        >
-          {/* Glowing streak — 1 px wide, 32 px tall */}
-          <div
-            style={{
-              width:     "1.5px",
-              height:    "32px",
-              borderRadius: "9999px",
-              background: p.gold
-                ? "rgba(197,160,89,0.9)"
-                : "rgba(139,180,247,0.9)",
-              boxShadow: p.gold
-                ? "0 0 6px 2px rgba(197,160,89,0.7),  0 0 12px 4px rgba(197,160,89,0.3)"
-                : "0 0 6px 2px rgba(139,180,247,0.7), 0 0 12px 4px rgba(139,180,247,0.3)",
-            }}
-          />
-        </motion.div>
-      ))}
-
-      {/* ── z-[10] Stats content (unchanged) ── */}
+      {/* ── z-[10] Stats content ── */}
       <div className="relative z-[10] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {stats.map((stat) => (
