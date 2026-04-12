@@ -52,12 +52,12 @@ export default function DynamicCities() {
           {currentPair.map((city) => (
             <div
               key={city.name}
-              className="inline-flex items-center gap-3 px-7 py-4 rounded-full text-lg font-semibold text-white border border-white/15"
+              className="inline-flex items-center gap-3 px-7 py-4 rounded-full text-lg font-semibold text-white border border-white/15 transition-all duration-500 ease-out hover:border-white/30 hover:bg-white/10"
               style={{
-                background: "rgba(255,255,255,0.07)",
-                backdropFilter: "blur(12px)",
-                WebkitBackdropFilter: "blur(12px)",
-                boxShadow: "0 1px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)",
+                background:          "rgba(255,255,255,0.07)",
+                backdropFilter:      "blur(12px)",
+                WebkitBackdropFilter:"blur(12px)",
+                boxShadow:           "0 1px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)",
               }}
             >
               <span className="text-2xl">{city.flag}</span>
