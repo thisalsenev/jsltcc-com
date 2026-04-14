@@ -41,12 +41,23 @@ export default function GlobeViz() {
   const pendulumTimer    = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isReady, setIsReady]       = useState(false);
   const [countries, setCountries]   = useState<any[]>([]);
+  const [containerWidth, setContainerWidth] = useState(0);
 
   // Fetch hex-polygon countries
   useEffect(() => {
     fetch("https://raw.githubusercontent.com/vasturiano/react-globe.gl/master/example/datasets/ne_110m_admin_0_countries.geojson")
       .then(r => r.json())
       .then(d => setCountries(d.features));
+  }, []);
+
+  // Measure container width so the canvas never defaults to window.innerWidth
+  useEffect(() => {
+    if (!mountRef.current) return;
+    const ro = new ResizeObserver(([entry]) => {
+      setContainerWidth(entry.contentRect.width);
+    });
+    ro.observe(mountRef.current);
+    return () => ro.disconnect();
   }, []);
 
   // Pause RAF when scrolled off-screen
@@ -108,6 +119,7 @@ export default function GlobeViz() {
     >
       <GlobeGL
         ref={globeEl}
+        width={containerWidth || undefined}
         height={600}
         backgroundColor="rgba(0,0,0,0)"
         showAtmosphere
