@@ -87,6 +87,12 @@ export default function GlobeViz() {
     Globe.position.y = 15;
     scene.add(Globe);
 
+    // Set initial rotation to Japan (36.2°N, 138.2°E) so the globe renders
+    // facing Japan on frame 1 — no startup whip.
+    const JAPAN_ROT = { x: 36.2 * (Math.PI / 180), y: -138.2 * (Math.PI / 180) };
+    Globe.rotation.x = JAPAN_ROT.x;
+    Globe.rotation.y = JAPAN_ROT.y;
+
     // 6. INTERACTIVE MOUSE TRACKING SETUP
     let mouseX = 0;
     let mouseY = 0;
@@ -108,8 +114,10 @@ export default function GlobeViz() {
       { x: 0.62, y: -2.43 }, // Tokyo
     ];
 
-    let currentBaseX = waypoints[0].x;
-    let currentBaseY = waypoints[0].y;
+    // Start currentBase at Japan so the first lerp step begins from exactly
+    // where the globe is visually — eliminating any initial swing.
+    let currentBaseX = JAPAN_ROT.x;
+    let currentBaseY = JAPAN_ROT.y;
 
     const renderLoop = () => {
       // Only consume GPU cycles while the globe is visible in the viewport
