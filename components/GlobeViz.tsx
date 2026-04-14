@@ -1,195 +1,138 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import * as THREE from "three";
-import ThreeGlobe from "three-globe";
 
-/* ── Coordinates ── */
+// SSR-safe: react-globe.gl touches window/WebGL on import
+const GlobeGL = dynamic(() => import("react-globe.gl"), { ssr: false });
+
+/* ─── Static data ────────────────────────────────────────── */
 const ARCS = [
-  { startLat: 51.5074, startLng: -0.1278, endLat: 35.6762, endLng: 139.6503 },
-  { startLat: 35.6762, startLng: 139.6503, endLat: 6.9271, endLng: 79.8612 },
-  { startLat: 6.9271, startLng: 79.8612, endLat: 51.5074, endLng: -0.1278 },
+  { startLat: 51.5074, startLng: -0.1278,  endLat: 35.6762, endLng: 139.6503 },
+  { startLat: 35.6762, startLng: 139.6503, endLat:  6.9271, endLng:  79.8612 },
+  { startLat:  6.9271, startLng:  79.8612, endLat: 51.5074, endLng:  -0.1278 },
 ];
 
-const POINTS = [
-  { lat: 6.9271, lng: 79.8612, city: "Colombo" },
-  { lat: 35.6762, lng: 139.6503, city: "Tokyo" },
-  { lat: 51.5074, lng: -0.1278, city: "London" },
+const RINGS = [
+  { lat:  6.9271, lng:  79.8612 },
+  { lat: 35.6762, lng: 139.6503 },
+  { lat: 51.5074, lng:  -0.1278 },
 ];
 
-const JAPAN_ROT = { x: 36.2 * (Math.PI / 180), y: -138.2 * (Math.PI / 180) };
+const WAYPOINTS = [
+  { lat:  6.9271, lng:  79.8612 }, // Colombo
+  { lat: 51.5074, lng:  -0.1278 }, // London
+  { lat: 35.6762, lng: 139.6503 }, // Tokyo
+];
 
+// First painted frame will be here — the library snaps to this before rendering
+const JAPAN_POV = { lat: 36.2, lng: 138.2, altitude: 2 };
+
+// Created once so React never sees a new object reference
+const GLOBE_MATERIAL = new THREE.MeshBasicMaterial({ color: 0x0a191e });
+const HIGH_RES = new Set(["Sri Lanka", "Japan", "United Kingdom"]);
+
+/* ─── Component ──────────────────────────────────────────── */
 export default function GlobeViz() {
-  const mountRef = useRef<HTMLDivElement>(null);
-  const [isReady, setIsReady] = useState(false);
+  const globeEl          = useRef<any>(null);
+  const mountRef         = useRef<HTMLDivElement>(null);
+  const pendulumTimer    = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isReady, setIsReady]       = useState(false);
+  const [countries, setCountries]   = useState<any[]>([]);
 
+  // Fetch hex-polygon countries
   useEffect(() => {
-    if (!mountRef.current) return;
-
-    // 1. SCENE
-    const scene = new THREE.Scene();
-
-    // 2. CAMERA
-    const camera = new THREE.PerspectiveCamera(
-      45,
-      mountRef.current.clientWidth / mountRef.current.clientHeight,
-      0.1,
-      1000
-    );
-    camera.position.z = 290;
-    camera.position.y = 20;
-
-    // 3. RENDERER
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    mountRef.current.appendChild(renderer.domElement);
-
-    // 4. LIGHTS
-    scene.add(new THREE.AmbientLight(0xffffff, 0.8));
-    const dLight = new THREE.DirectionalLight(0xffffff, 2);
-    dLight.position.set(-200, 500, 200);
-    scene.add(dLight);
-
-    // 5. GLOBE
-    const Globe = new ThreeGlobe()
-      .showGlobe(true)
-      .globeMaterial(new THREE.MeshBasicMaterial({ color: 0x0a191e }))
-      .showAtmosphere(true)
-      .atmosphereColor("#8bb4f7")
-      .atmosphereAltitude(0.12)
-      .arcsData(ARCS)
-      .arcColor(() => "#c5a059")
-      .arcAltitudeAutoScale(0.3)
-      .arcStroke(0.8)
-      .arcDashLength(0.5)
-      .arcDashGap(3)
-      .arcDashInitialGap(() => Math.random() * 5)
-      .arcDashAnimateTime(1500)
-      .ringsData(POINTS)
-      .ringColor(() => "#c5a059")
-      .ringMaxRadius(1.5)
-      .ringPropagationSpeed(1.2)
-      .ringRepeatPeriod(1500);
-
     fetch("https://raw.githubusercontent.com/vasturiano/react-globe.gl/master/example/datasets/ne_110m_admin_0_countries.geojson")
       .then(r => r.json())
-      .then(countries => {
-        Globe.hexPolygonsData(countries.features)
-          .hexPolygonResolution((feat: any) =>
-            ["Sri Lanka", "Japan", "United Kingdom"].includes(feat.properties.ADMIN) ? 5 : 3
-          )
-          .hexPolygonMargin(0.6)
-          .hexPolygonAltitude(0.005)
-          .hexPolygonColor(() => "#8bb4f7");
-      });
+      .then(d => setCountries(d.features));
+  }, []);
 
-    Globe.position.y = 15;
-    scene.add(Globe);
+  // Pause RAF when scrolled off-screen
+  useEffect(() => {
+    if (!mountRef.current) return;
+    const observer = new IntersectionObserver(([e]) => {
+      if (!globeEl.current) return;
+      e.isIntersecting
+        ? globeEl.current.resumeAnimation?.()
+        : globeEl.current.pauseAnimation?.();
+    }, { threshold: 0 });
+    observer.observe(mountRef.current);
+    return () => observer.disconnect();
+  }, []);
 
-    // 6. MOUSE
-    let mouseX = 0;
-    let mouseY = 0;
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-      mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-    };
-    window.addEventListener("mousemove", handleMouseMove);
+  // Cleanup pendulum on unmount
+  useEffect(() => () => { if (pendulumTimer.current) clearTimeout(pendulumTimer.current); }, []);
 
-    // 7. ANIMATION
-    let animationFrameId: number;
-    let isVisible = true;
+  const handleGlobeReady = useCallback(() => {
+    const g = globeEl.current;
+    if (!g) return;
 
-    const waypoints = [
-      { x: 0.12, y: -1.39 },
-      { x: 0.90, y: 0.00 },
-      { x: 0.62, y: -2.43 },
-    ];
+    // ① Native 0 ms snap — library positions camera before painting frame 1
+    g.pointOfView(JAPAN_POV, 0);
 
-    let currentBaseX = JAPAN_ROT.x;
-    let currentBaseY = JAPAN_ROT.y;
+    // ② Invisible dark core (matches #0a191e hero background)
+    if (typeof g.globeMaterial === "function") {
+      g.globeMaterial(GLOBE_MATERIAL);
+    }
 
-    // Force Japan rotation for every frame rendered while the wrapper is still
-    // opacity-0. This neutralises any frame ThreeGlobe's Kapsule async init
-    // may render at [0,0]. isRevealedRef flips to true once setIsReady fires.
-    const isRevealedRef = { current: false };
+    // ③ Decorative only — disable user interaction
+    const ctrl = g.controls();
+    ctrl.enableZoom   = false;
+    ctrl.enablePan    = false;
+    ctrl.enableRotate = false;
 
-    const renderLoop = () => {
-      if (!isVisible) return;
-
-      const time = Date.now();
-      const index = Math.floor(time / 6000) % waypoints.length;
-      const target = waypoints[index];
-
-      currentBaseX += (target.x - currentBaseX) * 0.005;
-      currentBaseY += (target.y - currentBaseY) * 0.005;
-
-      const mouseTiltX = mouseY * 0.5;
-      const mousePanY  = mouseX * 0.5;
-
-      if (!isRevealedRef.current) {
-        // Globe is still hidden — pin to Japan so the first visible frame is correct
-        Globe.rotation.x = JAPAN_ROT.x;
-        Globe.rotation.y = JAPAN_ROT.y;
-      } else {
-        Globe.rotation.x += ((currentBaseX + mouseTiltX) - Globe.rotation.x) * 0.05;
-        Globe.rotation.y += ((currentBaseY + mousePanY)  - Globe.rotation.y) * 0.05;
-      }
-
-      renderer.render(scene, camera);
-      animationFrameId = requestAnimationFrame(renderLoop);
-    };
-    renderLoop();
-
-    // Wait 200 ms for WebGL to paint Japan invisibly, then reveal.
-    const revealTimer = setTimeout(() => {
-      isRevealedRef.current = true;
+    // ④ Reveal after 80 ms so WebGL has committed the Japan frame
+    setTimeout(() => {
       setIsReady(true);
-    }, 200);
 
-    // Pause RAF when off-screen
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) { isVisible = true; renderLoop(); }
-        else { isVisible = false; cancelAnimationFrame(animationFrameId); }
-      },
-      { threshold: 0 }
-    );
-    if (mountRef.current) observer.observe(mountRef.current);
-
-    // 8. RESIZE
-    const handleResize = () => {
-      if (!mountRef.current) return;
-      camera.aspect = mountRef.current.clientWidth / mountRef.current.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
-    };
-    window.addEventListener("resize", handleResize);
-
-    // 9. CLEANUP
-    return () => {
-      clearTimeout(revealTimer);
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(animationFrameId);
-      observer.disconnect();
-      if (mountRef.current && renderer.domElement) {
-        mountRef.current.removeChild(renderer.domElement);
-      }
-      renderer.dispose();
-    };
+      // ⑤ Pendulum starts after the entrance animation finishes
+      let idx = 2; // begin at Tokyo (closest to Japan)
+      const tick = () => {
+        idx = (idx + 1) % WAYPOINTS.length;
+        g.pointOfView({ ...WAYPOINTS[idx], altitude: 2 }, 6000);
+        pendulumTimer.current = setTimeout(tick, 6200);
+      };
+      pendulumTimer.current = setTimeout(tick, 1700); // 700 ms entrance + 1 s pause
+    }, 80);
   }, []);
 
   return (
-    // Inline style opacity — not a Tailwind class — so it's present from the
-    // first SSR byte and cannot be missed by the JIT scanner.
-    <div
+    <motion.div
       ref={mountRef}
       className="relative z-[10] w-full h-[600px] pointer-events-none"
-      style={{
-        opacity: isReady ? 1 : 0,
-        transition: "opacity 0.7s ease-in-out",
-      }}
-    />
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={isReady ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+    >
+      <GlobeGL
+        ref={globeEl}
+        height={600}
+        backgroundColor="rgba(0,0,0,0)"
+        showAtmosphere
+        atmosphereColor="#8bb4f7"
+        atmosphereAltitude={0.12}
+        hexPolygonsData={countries}
+        hexPolygonResolution={(d: any) => HIGH_RES.has(d.properties.ADMIN) ? 5 : 3}
+        hexPolygonMargin={0.6}
+        hexPolygonAltitude={0.005}
+        hexPolygonColor={() => "#8bb4f7"}
+        arcsData={ARCS}
+        arcColor={() => "#c5a059"}
+        arcAltitudeAutoScale={0.3}
+        arcStroke={0.8}
+        arcDashLength={0.5}
+        arcDashGap={3}
+        arcDashInitialGap={() => Math.random() * 5}
+        arcDashAnimateTime={1500}
+        ringsData={RINGS}
+        ringColor={() => "#c5a059"}
+        ringMaxRadius={1.5}
+        ringPropagationSpeed={1.2}
+        ringRepeatPeriod={1500}
+        onGlobeReady={handleGlobeReady}
+      />
+    </motion.div>
   );
 }
