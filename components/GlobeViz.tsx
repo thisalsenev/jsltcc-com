@@ -110,7 +110,8 @@ export default function GlobeViz() {
     // 7. THE ANIMATION LOOP & WAYPOINTS
     let animationFrameId: number;
     let isVisible = true; // controlled by IntersectionObserver below
-    let revealed = false;  // becomes true after the first correctly-rotated frame
+    let firstFrame = true; // snap rotation to Japan on frame 0, override any lib reset
+    let revealed = false;  // becomes true after the first correctly-rotated frame is drawn
 
     const waypoints = [
       { x: 0.12, y: -1.39 }, // Colombo
@@ -118,8 +119,7 @@ export default function GlobeViz() {
       { x: 0.62, y: -2.43 }, // Tokyo
     ];
 
-    // Start currentBase at Japan so the first lerp step begins from exactly
-    // where the globe is visually — eliminating any initial swing.
+    // currentBase starts at Japan — lerp drifts smoothly from here
     let currentBaseX = JAPAN_ROT.x;
     let currentBaseY = JAPAN_ROT.y;
 
@@ -138,12 +138,21 @@ export default function GlobeViz() {
       const mouseTiltX = mouseY * 0.5;
       const mousePanY  = mouseX * 0.5;
 
-      Globe.rotation.x += ((currentBaseX + mouseTiltX) - Globe.rotation.x) * 0.05;
-      Globe.rotation.y += ((currentBaseY + mousePanY)  - Globe.rotation.y) * 0.05;
+      if (firstFrame) {
+        // Hard-snap to Japan on the very first frame, immediately before render.
+        // This overrides any async internal reset ThreeGlobe may have applied
+        // after our synchronous Globe.rotation assignment above.
+        Globe.rotation.x = JAPAN_ROT.x;
+        Globe.rotation.y = JAPAN_ROT.y;
+        firstFrame = false;
+      } else {
+        Globe.rotation.x += ((currentBaseX + mouseTiltX) - Globe.rotation.x) * 0.05;
+        Globe.rotation.y += ((currentBaseY + mousePanY)  - Globe.rotation.y) * 0.05;
+      }
 
       renderer.render(scene, camera);
 
-      // Reveal the canvas only after the first frame is painted at Japan's rotation
+      // Reveal canvas only after the first correctly-positioned frame is drawn
       if (!revealed) {
         revealed = true;
         renderer.domElement.style.opacity = "1";
