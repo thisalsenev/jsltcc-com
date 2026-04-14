@@ -35,6 +35,9 @@ export default function GlobeViz() {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
+    // Keep canvas invisible until the first frame with correct rotation is drawn
+    renderer.domElement.style.opacity = "0";
+    renderer.domElement.style.transition = "opacity 0.4s ease";
     mountRef.current.appendChild(renderer.domElement);
 
     // 4. SETUP LIGHTS
@@ -107,6 +110,7 @@ export default function GlobeViz() {
     // 7. THE ANIMATION LOOP & WAYPOINTS
     let animationFrameId: number;
     let isVisible = true; // controlled by IntersectionObserver below
+    let revealed = false;  // becomes true after the first correctly-rotated frame
 
     const waypoints = [
       { x: 0.12, y: -1.39 }, // Colombo
@@ -138,6 +142,13 @@ export default function GlobeViz() {
       Globe.rotation.y += ((currentBaseY + mousePanY)  - Globe.rotation.y) * 0.05;
 
       renderer.render(scene, camera);
+
+      // Reveal the canvas only after the first frame is painted at Japan's rotation
+      if (!revealed) {
+        revealed = true;
+        renderer.domElement.style.opacity = "1";
+      }
+
       animationFrameId = requestAnimationFrame(renderLoop);
     };
     renderLoop();
