@@ -17,8 +17,16 @@ const POINTS = [
   { lat: 51.5074, lng: -0.1278, city: "London" },
 ];
 
+// Japan: 36.2°N 138.2°E → Three.js Globe rotation
+const JAPAN_ROT = { x: 36.2 * (Math.PI / 180), y: -138.2 * (Math.PI / 180) };
+
+// Hold Japan rotation for this many frames before revealing the globe.
+// Outlasts ThreeGlobe's Kapsule async init, which fires on the first RAF tick.
+const SNAP_FRAMES = 8;
+
 export default function GlobeViz() {
-  const mountRef = useRef<HTMLDivElement>(null);
+  const mountRef   = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -35,9 +43,6 @@ export default function GlobeViz() {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
-    // Keep canvas invisible until the first frame with correct rotation is drawn
-    renderer.domElement.style.opacity = "0";
-    renderer.domElement.style.transition = "opacity 0.4s ease";
     mountRef.current.appendChild(renderer.domElement);
 
     // 4. SETUP LIGHTS
@@ -49,7 +54,6 @@ export default function GlobeViz() {
     scene.add(dLight);
 
     // 5. INITIALIZE VANILLA THREE-GLOBE
-    // Flat unlit material — ignores all scene lighting so it blends into the hero background
     const coreMaterial = new THREE.MeshBasicMaterial({ color: 0x0a191e });
 
     const Globe = new ThreeGlobe()
@@ -72,36 +76,27 @@ export default function GlobeViz() {
       .ringPropagationSpeed(1.2)
       .ringRepeatPeriod(1500);
 
-
     fetch("https://raw.githubusercontent.com/vasturiano/react-globe.gl/master/example/datasets/ne_110m_admin_0_countries.geojson")
       .then(res => res.json())
       .then(countries => {
         Globe.hexPolygonsData(countries.features)
-          // Dynamic Resolution: Tighter dots for target countries, default dots for the rest
           .hexPolygonResolution((feat: any) => {
             const highResCountries = ["Sri Lanka", "Japan", "United Kingdom"];
             return highResCountries.includes(feat.properties.ADMIN) ? 5 : 3;
           })
           .hexPolygonMargin(0.6)
-          .hexPolygonAltitude(0.005) // Keeps them elevated above the solid core
-          .hexPolygonColor(() => "#8bb4f7"); // Glowing light blue dots
+          .hexPolygonAltitude(0.005)
+          .hexPolygonColor(() => "#8bb4f7");
       });
 
     Globe.position.y = 15;
     scene.add(Globe);
-
-    // Set initial rotation to Japan (36.2°N, 138.2°E) so the globe renders
-    // facing Japan on frame 1 — no startup whip.
-    const JAPAN_ROT = { x: 36.2 * (Math.PI / 180), y: -138.2 * (Math.PI / 180) };
-    Globe.rotation.x = JAPAN_ROT.x;
-    Globe.rotation.y = JAPAN_ROT.y;
 
     // 6. INTERACTIVE MOUSE TRACKING SETUP
     let mouseX = 0;
     let mouseY = 0;
 
     const handleMouseMove = (event: MouseEvent) => {
-      // Normalize mouse coordinates from -1 to +1
       mouseX = (event.clientX / window.innerWidth) * 2 - 1;
       mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
     };
@@ -109,9 +104,7 @@ export default function GlobeViz() {
 
     // 7. THE ANIMATION LOOP & WAYPOINTS
     let animationFrameId: number;
-    let isVisible = true; // controlled by IntersectionObserver below
-    let firstFrame = true; // snap rotation to Japan on frame 0, override any lib reset
-    let revealed = false;  // becomes true after the first correctly-rotated frame is drawn
+    let isVisible = true;
 
     const waypoints = [
       { x: 0.12, y: -1.39 }, // Colombo
@@ -119,12 +112,17 @@ export default function GlobeViz() {
       { x: 0.62, y: -2.43 }, // Tokyo
     ];
 
-    // currentBase starts at Japan — lerp drifts smoothly from here
     let currentBaseX = JAPAN_ROT.x;
     let currentBaseY = JAPAN_ROT.y;
 
+    // Count frames where we hard-hold Japan rotation.
+    // The overlay div (same color as the hero bg) covers the canvas during
+    // this period so the user never sees the Africa default or any async reset
+    // applied by ThreeGlobe's Kapsule init. After SNAP_FRAMES the overlay
+    // fades out and normal ambient animation takes over.
+    let snappedFrames = 0;
+
     const renderLoop = () => {
-      // Only consume GPU cycles while the globe is visible in the viewport
       if (!isVisible) return;
 
       const time = Date.now();
@@ -138,26 +136,23 @@ export default function GlobeViz() {
       const mouseTiltX = mouseY * 0.5;
       const mousePanY  = mouseX * 0.5;
 
-      if (firstFrame) {
-        // Hard-snap to Japan on the very first frame, immediately before render.
-        // This overrides any async internal reset ThreeGlobe may have applied
-        // after our synchronous Globe.rotation assignment above.
+      if (snappedFrames < SNAP_FRAMES) {
+        // Force Japan every frame until the overlay lifts — this overrides
+        // any internal ThreeGlobe reset that fires on the first RAF tick.
         Globe.rotation.x = JAPAN_ROT.x;
         Globe.rotation.y = JAPAN_ROT.y;
-        firstFrame = false;
+        snappedFrames++;
+
+        if (snappedFrames === SNAP_FRAMES && overlayRef.current) {
+          // Globe is confirmed at Japan — fade the overlay out.
+          overlayRef.current.style.opacity = "0";
+        }
       } else {
         Globe.rotation.x += ((currentBaseX + mouseTiltX) - Globe.rotation.x) * 0.05;
         Globe.rotation.y += ((currentBaseY + mousePanY)  - Globe.rotation.y) * 0.05;
       }
 
       renderer.render(scene, camera);
-
-      // Reveal canvas only after the first correctly-positioned frame is drawn
-      if (!revealed) {
-        revealed = true;
-        renderer.domElement.style.opacity = "1";
-      }
-
       animationFrameId = requestAnimationFrame(renderLoop);
     };
     renderLoop();
@@ -167,7 +162,6 @@ export default function GlobeViz() {
       ([entry]) => {
         if (entry.isIntersecting) {
           isVisible = true;
-          // Restart the loop — it stopped itself when isVisible went false
           renderLoop();
         } else {
           isVisible = false;
@@ -204,6 +198,18 @@ export default function GlobeViz() {
     <div
       ref={mountRef}
       className="relative z-[10] w-full h-[600px] flex items-center justify-center pointer-events-none"
-    />
+    >
+      {/* Overlay — same colour as hero bg. Sits above the canvas and hides the
+          globe until Japan rotation is confirmed. Fades out after SNAP_FRAMES. */}
+      <div
+        ref={overlayRef}
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "#0a191e",
+          transition: "opacity 0.5s ease",
+          zIndex: 2,
+        }}
+      />
+    </div>
   );
 }
