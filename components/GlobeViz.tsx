@@ -141,11 +141,11 @@ export default function GlobeViz() {
     };
     renderLoop();
 
-    // Wait 100 ms for WebGL to paint Japan invisibly, then reveal.
+    // Wait 200 ms for WebGL to paint Japan invisibly, then reveal.
     const revealTimer = setTimeout(() => {
       isRevealedRef.current = true;
       setIsReady(true);
-    }, 100);
+    }, 200);
 
     // Pause RAF when off-screen
     const observer = new IntersectionObserver(
@@ -181,14 +181,15 @@ export default function GlobeViz() {
   }, []);
 
   return (
-    // State-Locked Curtain: stays opacity-0 until 100ms after mount,
-    // ensuring WebGL has painted Japan before the user sees anything.
+    // Inline style opacity — not a Tailwind class — so it's present from the
+    // first SSR byte and cannot be missed by the JIT scanner.
     <div
-      className={`relative z-[10] w-full h-[600px] pointer-events-none transition-opacity duration-700 ease-in-out ${
-        isReady ? "opacity-100" : "opacity-0"
-      }`}
-    >
-      <div ref={mountRef} className="w-full h-full" />
-    </div>
+      ref={mountRef}
+      className="relative z-[10] w-full h-[600px] pointer-events-none"
+      style={{
+        opacity: isReady ? 1 : 0,
+        transition: "opacity 0.7s ease-in-out",
+      }}
+    />
   );
 }
