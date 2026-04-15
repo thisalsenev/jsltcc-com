@@ -3,8 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import * as THREE from "three";
-
 // SSR-safe: react-globe.gl touches window/WebGL on import
 const GlobeGL = dynamic(() => import("react-globe.gl"), { ssr: false });
 
@@ -30,8 +28,10 @@ const WAYPOINTS = [
 // First painted frame will be here — the library snaps to this before rendering
 const JAPAN_POV = { lat: 36.2, lng: 138.2, altitude: 2 };
 
-// Created once so React never sees a new object reference
-const GLOBE_MATERIAL = new THREE.MeshBasicMaterial({ color: 0x0a191e });
+// Solid #0a191e SVG used as the globe texture — makes the sphere perfectly
+// match the hero background so the core is invisible.
+const DARK_GLOBE_URL = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2'%3E%3Crect width='2' height='2' fill='%230a191e'/%3E%3C/svg%3E`;
+
 const HIGH_RES = new Set(["Sri Lanka", "Japan", "United Kingdom"]);
 
 /* ─── Component ──────────────────────────────────────────── */
@@ -83,12 +83,7 @@ export default function GlobeViz() {
     // ① Native 0 ms snap — library positions camera before painting frame 1
     g.pointOfView(JAPAN_POV, 0);
 
-    // ② Invisible dark core (matches #0a191e hero background)
-    if (typeof g.globeMaterial === "function") {
-      g.globeMaterial(GLOBE_MATERIAL);
-    }
-
-    // ③ Decorative only — disable user interaction
+    // ② Decorative only — disable user interaction
     const ctrl = g.controls();
     ctrl.enableZoom   = false;
     ctrl.enablePan    = false;
@@ -122,6 +117,7 @@ export default function GlobeViz() {
         width={containerWidth || undefined}
         height={600}
         backgroundColor="rgba(0,0,0,0)"
+        globeImageUrl={DARK_GLOBE_URL}
         showAtmosphere
         atmosphereColor="#8bb4f7"
         atmosphereAltitude={0.12}
