@@ -35,8 +35,8 @@ export default function DynamicCities() {
   const currentPair = PAIRS[pairIndex];
 
   return (
-    <div className="pt-7 mt-8 border-t border-white/10">
-      <p className="text-sm text-slate-400 font-medium uppercase tracking-widest mb-5">
+    <div className="pt-5 sm:pt-7 mt-6 sm:mt-8 border-t border-white/10">
+      <p className="text-xs sm:text-sm text-slate-400 font-medium uppercase tracking-widest mb-4 sm:mb-5">
         Destination Cities
       </p>
 
@@ -47,7 +47,7 @@ export default function DynamicCities() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 1.04 }}
           transition={{ duration: 1.0, ease: "easeInOut" }}
-          className="flex flex-wrap gap-4"
+          className="flex flex-wrap gap-2.5 sm:gap-4"
         >
           {currentPair.map((city) => (
             <div key={city.name} className="relative rounded-full overflow-hidden">
@@ -63,10 +63,10 @@ export default function DynamicCities() {
                 }}
               />
               {/* Layer B: foreground content */}
-              <div className="relative z-10 inline-flex items-center gap-3 px-7 py-4 text-lg font-semibold text-white">
-                <span className="text-2xl">{city.flag}</span>
+              <div className="relative z-10 inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-7 py-3 sm:py-4 text-base sm:text-lg font-semibold text-white">
+                <span className="text-xl sm:text-2xl">{city.flag}</span>
                 <span>{city.name}</span>
-                <span className="text-slate-400 font-normal text-sm">{city.country}</span>
+                <span className="text-slate-400 font-normal text-xs sm:text-sm">{city.country}</span>
               </div>
             </div>
           ))}

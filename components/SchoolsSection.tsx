@@ -58,8 +58,27 @@ export default function SchoolsSection() {
   const filtered = activeFilter === "all" ? schools : schools.filter((s) => s.type === activeFilter);
 
   return (
-    <section className="py-20 bg-white" id="schools">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden py-14 sm:py-20" id="schools">
+
+      {/* GPU-accelerated panning background */}
+      <motion.div
+        className="absolute w-[120%] h-[120%] -left-[10%] -top-[10%] z-0"
+        style={{
+          willChange: "transform",
+          background: `
+            radial-gradient(ellipse at 20% 20%, rgba(134, 239, 172, 0.7) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 10%, rgba(216, 180, 254, 0.7) 0%, transparent 45%),
+            radial-gradient(ellipse at 60% 60%, rgba(167, 243, 208, 0.5) 0%, transparent 50%),
+            radial-gradient(ellipse at 10% 80%, rgba(192, 132, 252, 0.6) 0%, transparent 45%),
+            radial-gradient(ellipse at 90% 80%, rgba(110, 231, 183, 0.6) 0%, transparent 40%),
+            radial-gradient(ellipse at 50% 30%, rgba(233, 213, 255, 0.6) 0%, transparent 55%),
+            #f5f0ff
+          `,
+        }}
+        animate={{ x: ["-2%", "2%", "-1%", "-2%"], y: ["-2%", "1%", "2%", "-2%"] }}
+        transition={{ duration: 30, ease: "linear", repeat: Infinity }}
+      />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
           <motion.p
@@ -97,7 +116,7 @@ export default function SchoolsSection() {
               className={`px-5 py-2 rounded-full text-sm font-semibold transition-all border ${
                 activeFilter === f.key
                   ? "bg-[#0f172a] text-white border-[#0f172a] shadow-md"
-                  : "bg-white text-slate-600 border-slate-200 hover:border-slate-400"
+                  : "bg-white/80 backdrop-blur-sm text-slate-600 border-slate-200 hover:border-slate-400"
               }`}
             >
               {f.label}
@@ -111,7 +130,7 @@ export default function SchoolsSection() {
         </div>
 
         {/* Schools Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
           <AnimatePresence mode="popLayout">
             {filtered.map((school, i) => {
               const cityImg = cityImages[school.city];
@@ -141,9 +160,9 @@ export default function SchoolsSection() {
                   )}
 
                   {/* Content — white frosted stage */}
-                  <div className="relative z-10 p-5">
+                  <div className="relative z-10 p-3 sm:p-5">
                     {/* Logo */}
-                    <div className="w-11 h-11 bg-white rounded-xl flex items-center justify-center text-[#0f172a] font-bold text-sm mb-4 shadow-md">
+                    <div className="w-8 h-8 sm:w-11 sm:h-11 bg-white rounded-lg sm:rounded-xl flex items-center justify-center text-[#0f172a] font-bold text-xs sm:text-sm mb-2 sm:mb-4 shadow-md">
                       {school.logo}
                     </div>
 
@@ -153,18 +172,18 @@ export default function SchoolsSection() {
                     </span>
 
                     {/* Name + location — frosted white box */}
-                    <div className="mt-3 mb-3 bg-white/90 backdrop-blur-sm rounded-xl px-3 py-2.5 shadow-sm">
-                      <h3 className="font-bold text-[#0f172a] text-sm leading-snug group-hover:text-[#c0392b] transition-colors">
+                    <div className="mt-2 sm:mt-3 mb-2 sm:mb-3 bg-white/90 backdrop-blur-sm rounded-lg sm:rounded-xl px-2 sm:px-3 py-2 sm:py-2.5 shadow-sm">
+                      <h3 className="font-bold text-[#0f172a] text-xs sm:text-sm leading-snug group-hover:text-[#c0392b] transition-colors line-clamp-2">
                         {school.name}
                       </h3>
-                      <div className="flex items-center gap-1 text-slate-500 text-xs mt-1">
-                        <MapPin size={10} />
-                        {school.city}, Japan
+                      <div className="flex items-center gap-1 text-slate-500 text-xs mt-0.5 sm:mt-1">
+                        <MapPin size={9} />
+                        {school.city}
                       </div>
                     </div>
 
-                    {/* Programs */}
-                    <div className="flex flex-wrap gap-1 mb-3">
+                    {/* Programs — hidden on mobile to save space */}
+                    <div className="hidden sm:flex flex-wrap gap-1 mb-3">
                       {school.programs.map((p) => (
                         <span key={p} className="text-xs bg-white/80 backdrop-blur-sm text-slate-700 px-2 py-0.5 rounded-md font-medium shadow-sm">
                           {p}
@@ -173,7 +192,7 @@ export default function SchoolsSection() {
                     </div>
 
                     {/* View Details */}
-                    <button className="flex items-center gap-1 text-white text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button className="flex items-center gap-1 text-white text-xs font-semibold opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
                       {t("viewDetails")} <ExternalLink size={12} />
                     </button>
                   </div>

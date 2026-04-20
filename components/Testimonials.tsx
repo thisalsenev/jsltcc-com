@@ -43,7 +43,7 @@ export default function Testimonials() {
   const t = useTranslations("testimonials");
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-14 sm:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <motion.p
@@ -80,7 +80,7 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="bg-slate-50 rounded-2xl p-7 border border-slate-100 hover:border-[#c0392b]/20 hover:shadow-md transition-all"
+              className="bg-slate-50 rounded-2xl p-5 sm:p-7 border border-slate-100 hover:border-[#c0392b]/20 hover:shadow-md transition-all"
             >
               <Quote size={28} className="text-[#c0392b]/30 mb-4" />
               <p className="text-slate-600 leading-relaxed mb-6 text-sm">

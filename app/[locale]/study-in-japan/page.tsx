@@ -45,19 +45,19 @@ function StudyJapanContent() {
     <>
       <AppStoreMarquee images={JAPAN_IMAGES}>
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-[#c0392b] font-semibold text-sm uppercase tracking-widest mb-3">Study Abroad</p>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-5">{t("title")}</h1>
-          <p className="text-slate-300 text-lg">{t("hero")}</p>
+          <p className="text-[#c0392b] font-semibold text-xs sm:text-sm uppercase tracking-widest mb-3">Study Abroad</p>
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-white mb-4 sm:mb-5">{t("title")}</h1>
+          <p className="text-slate-300 text-base sm:text-lg">{t("hero")}</p>
         </div>
       </AppStoreMarquee>
 
       {/* Process */}
-      <section className="py-20 bg-white">
+      <section className="py-14 sm:py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-extrabold text-[#0f172a] mb-10 text-center">{t("processTitle")}</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-[#0f172a] mb-8 sm:mb-10 text-center">{t("processTitle")}</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {steps.map((step) => (
-              <div key={step.step} className="relative bg-slate-50 rounded-2xl p-6 border border-slate-100">
+              <div key={step.step} className="relative bg-slate-50 rounded-2xl p-5 sm:p-6 border border-slate-100">
                 <div className="text-5xl font-extrabold text-slate-100 absolute top-4 right-4">{step.step}</div>
                 <h3 className="font-bold text-[#0f172a] mb-2 relative">{step.title}</h3>
                 <p className="text-slate-500 text-sm leading-relaxed relative">{step.desc}</p>

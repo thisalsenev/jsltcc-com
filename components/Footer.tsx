@@ -22,6 +22,14 @@ function InstagramIcon({ size = 16 }: { size?: number }) {
   );
 }
 
+function WhatsAppIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" fill="currentColor">
+      <path d="M16 0C7.163 0 0 7.163 0 16c0 2.833.737 5.49 2.027 7.8L0 32l8.433-2.007A15.93 15.93 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.27 13.27 0 0 1-6.773-1.853l-.487-.29-5.013 1.193 1.22-4.88-.317-.5A13.267 13.267 0 0 1 2.667 16C2.667 8.637 8.637 2.667 16 2.667S29.333 8.637 29.333 16 23.363 29.333 16 29.333zm7.293-9.867c-.4-.2-2.363-1.163-2.73-1.297-.367-.133-.633-.2-.9.2-.267.4-1.033 1.297-1.267 1.563-.233.267-.467.3-.867.1-.4-.2-1.687-.623-3.213-1.98-1.187-1.057-1.99-2.363-2.223-2.763-.233-.4-.025-.617.175-.817.18-.18.4-.467.6-.7.2-.233.267-.4.4-.667.133-.267.067-.5-.033-.7-.1-.2-.9-2.167-1.233-2.967-.323-.78-.653-.673-.9-.687-.233-.013-.5-.017-.767-.017-.267 0-.7.1-1.067.5-.367.4-1.4 1.367-1.4 3.333s1.433 3.867 1.633 4.133c.2.267 2.82 4.307 6.833 6.037.957.413 1.703.66 2.283.843.96.307 1.833.263 2.523.16.77-.113 2.363-.967 2.697-1.9.333-.933.333-1.733.233-1.9-.097-.167-.363-.267-.763-.467z" />
+    </svg>
+  );
+}
+
 export default function Footer() {
   const t = useTranslations("footer");
   const nav = useTranslations("nav");
@@ -33,22 +41,21 @@ export default function Footer() {
     { href: "/about", label: nav("about") },
     { href: "/japanese-language", label: nav("japaneseLanguage") },
     { href: "/study-in-japan", label: nav("studyInJapan") },
-    { href: "/study-in-australia", label: nav("studyInAustralia") },
-    { href: "/visa-services", label: nav("visaServices") },
-    { href: "/activities", label: nav("activities") },
+    { href: "/study-in-united-kingdom", label: nav("studyInUK") },
+    { href: "/topj-exam", label: nav("topjExam") },
     { href: "/contact", label: nav("contact") },
   ];
 
   return (
     <footer className="bg-[#080f1e] text-slate-400">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
               <div className="relative w-12 h-14 shrink-0">
                 <Image
-                  src="/images/logo/JSLTCC LOGO.jpeg"
+                  src="/images/logo/Untitled (1).png"
                   alt="JSLTCC Logo"
                   fill
                   className="object-contain rounded-sm"
@@ -66,7 +73,8 @@ export default function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 bg-white/10 hover:bg-[#c0392b] rounded-lg flex items-center justify-center transition-colors text-white"
+                className="w-9 h-9 rounded-lg flex items-center justify-center transition-all hover:scale-110 text-white"
+                style={{ background: "#1877F2" }}
               >
                 <FacebookIcon size={16} />
               </a>
@@ -74,9 +82,19 @@ export default function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 bg-white/10 hover:bg-[#c0392b] rounded-lg flex items-center justify-center transition-colors text-white"
+                className="w-9 h-9 rounded-lg flex items-center justify-center transition-all hover:scale-110 text-white"
+                style={{ background: "radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)" }}
               >
                 <InstagramIcon size={16} />
+              </a>
+              <a
+                href="https://wa.me/94777226726"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg flex items-center justify-center transition-all hover:scale-110 text-white"
+                style={{ background: "#25D366" }}
+              >
+                <WhatsAppIcon size={16} />
               </a>
             </div>
           </div>
@@ -84,12 +102,12 @@ export default function Footer() {
           {/* Quick links */}
           <div>
             <h4 className="text-white font-semibold text-sm mb-5">{t("quickLinks")}</h4>
-            <ul className="space-y-2">
+            <ul className="space-y-1 sm:space-y-2">
               {links.map((link) => (
                 <li key={link.href}>
                   <a
                     href={`/${locale}${link.href === "/" ? "" : link.href}`}
-                    className="text-sm hover:text-white transition-colors"
+                    className="text-sm hover:text-white transition-colors inline-block py-1 sm:py-0"
                   >
                     {link.label}
                   </a>
@@ -128,9 +146,7 @@ export default function Footer() {
               <li><a href={`/${locale}/japanese-language`} className="hover:text-white transition-colors">Japanese Language (JLPT, TOPJ, NAT)</a></li>
               <li><a href={`/${locale}/study-in-japan`} className="hover:text-white transition-colors">Study in Japan</a></li>
               <li><a href={`/${locale}/study-in-united-kingdom`} className="hover:text-white transition-colors">Study in United Kingdom</a></li>
-              <li><a href={`/${locale}/visa-services`} className="hover:text-white transition-colors">Student Visa</a></li>
-              <li><a href={`/${locale}/visa-services`} className="hover:text-white transition-colors">Working Visa</a></li>
-              <li><a href={`/${locale}/visa-services`} className="hover:text-white transition-colors">Training Visa</a></li>
+              <li><a href={`/${locale}/topj-exam`} className="hover:text-white transition-colors">TOPJ Exam Registration</a></li>
             </ul>
           </div>
         </div>

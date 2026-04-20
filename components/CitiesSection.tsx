@@ -85,7 +85,7 @@ export default function CitiesSection() {
   const locale = useLocale();
 
   return (
-    <section className="py-20 bg-[#0f172a]" id="cities">
+    <section className="py-14 sm:py-20 bg-[#0f172a]" id="cities">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-14">
@@ -159,7 +159,7 @@ export default function CitiesSection() {
                 <p className="text-white/70 text-xs leading-relaxed line-clamp-1 mb-2">
                   {city.description}
                 </p>
-                <span className="inline-flex items-center gap-1 text-white text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className="inline-flex items-center gap-1 text-white text-xs font-semibold opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
                   {t("exploreCity")} <ArrowRight size={12} />
                 </span>
               </div>

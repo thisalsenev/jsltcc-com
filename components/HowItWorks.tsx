@@ -16,7 +16,7 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="py-20 bg-slate-50">
+    <section className="py-14 sm:py-20 bg-slate-50">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <motion.p
@@ -49,7 +49,7 @@ export default function HowItWorks() {
           {/* Connector line */}
           <div className="hidden md:block absolute top-12 left-1/6 right-1/6 h-0.5 bg-gradient-to-r from-[#c0392b]/30 via-[#c0392b] to-[#c0392b]/30" style={{ left: "16.6%", right: "16.6%" }} />
 
-          <div className="grid md:grid-cols-3 gap-10">
+          <div className="grid md:grid-cols-3 gap-6 sm:gap-10">
             {steps.map(({ key, icon: Icon }, i) => (
               <motion.div
                 key={key}

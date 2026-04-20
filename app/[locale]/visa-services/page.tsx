@@ -53,21 +53,21 @@ function VisaContent() {
 
   return (
     <>
-      <section className="bg-[#0f172a] py-24 px-4">
+      <section className="bg-[#0f172a] py-16 sm:py-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-[#c0392b] font-semibold text-sm uppercase tracking-widest mb-3">Visa Assistance</p>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-5">{t("title")}</h1>
-          <p className="text-slate-300 text-lg">{t("hero")}</p>
+          <p className="text-[#c0392b] font-semibold text-xs sm:text-sm uppercase tracking-widest mb-3">Visa Assistance</p>
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-white mb-4 sm:mb-5">{t("title")}</h1>
+          <p className="text-slate-300 text-base sm:text-lg">{t("hero")}</p>
         </div>
       </section>
 
-      <section className="py-20 bg-white">
+      <section className="py-14 sm:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-5 sm:gap-8">
             {visas.map((visa) => {
               const Icon = visa.icon;
               return (
-                <div key={visa.title} className={`rounded-2xl p-8 border ${visa.color} flex flex-col`}>
+                <div key={visa.title} className={`rounded-2xl p-5 sm:p-8 border ${visa.color} flex flex-col`}>
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 ${visa.iconColor}`}>
                     <Icon size={22} />
                   </div>

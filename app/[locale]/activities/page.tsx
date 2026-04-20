@@ -30,15 +30,15 @@ function ActivitiesContent() {
 
   return (
     <>
-      <section className="bg-[#0f172a] py-24 px-4">
+      <section className="bg-[#0f172a] py-16 sm:py-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-[#c0392b] font-semibold text-sm uppercase tracking-widest mb-3">Events & Gallery</p>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-5">{t("title")}</h1>
-          <p className="text-slate-300 text-lg">{t("hero")}</p>
+          <p className="text-[#c0392b] font-semibold text-xs sm:text-sm uppercase tracking-widest mb-3">Events & Gallery</p>
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-white mb-4 sm:mb-5">{t("title")}</h1>
+          <p className="text-slate-300 text-base sm:text-lg">{t("hero")}</p>
         </div>
       </section>
 
-      <section className="py-20 bg-white">
+      <section className="py-14 sm:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Category tabs */}
           <div className="flex flex-wrap gap-2 justify-center mb-10">
@@ -52,14 +52,14 @@ function ActivitiesContent() {
             ))}
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {activities.map((act) => (
               <div key={act.title} className="border border-slate-200 rounded-2xl overflow-hidden hover:shadow-md hover:border-[#c0392b]/30 transition-all group">
                 {/* Placeholder image */}
-                <div className="h-40 bg-gradient-to-br from-[#0f172a] to-[#1e293b] flex items-center justify-center">
-                  <div className="text-white/20 text-6xl font-serif">日</div>
+                <div className="h-32 sm:h-40 bg-gradient-to-br from-[#0f172a] to-[#1e293b] flex items-center justify-center">
+                  <div className="text-white/20 text-5xl sm:text-6xl font-serif">日</div>
                 </div>
-                <div className="p-5">
+                <div className="p-4 sm:p-5">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-semibold bg-[#c0392b]/10 text-[#c0392b] px-2.5 py-0.5 rounded-full">{act.category}</span>
                     <span className="text-xs text-slate-400">{act.date}</span>

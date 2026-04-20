@@ -9,7 +9,9 @@ export default function SakuraFall() {
   const [petals, setPetals] = useState<any[]>([]);
 
   useEffect(() => {
-    const generatedPetals = Array.from({ length: 30 }).map((_, i) => ({
+    const isMobile = window.innerWidth < 640;
+    const count = isMobile ? 12 : 30;
+    const generatedPetals = Array.from({ length: count }).map((_, i) => ({
       id: i,
       left: `${random(2, 98)}vw`,
       scale: random(0.4, 1.2),

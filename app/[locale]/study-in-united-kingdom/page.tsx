@@ -49,18 +49,18 @@ function StudyUKContent() {
     <>
       <AppStoreMarquee images={UK_IMAGES}>
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-[#c0392b] font-semibold text-sm uppercase tracking-widest mb-3">Study Abroad</p>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-5">{t("title")}</h1>
-          <p className="text-slate-300 text-lg">{t("hero")}</p>
+          <p className="text-[#c0392b] font-semibold text-xs sm:text-sm uppercase tracking-widest mb-3">Study Abroad</p>
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-white mb-4 sm:mb-5">{t("title")}</h1>
+          <p className="text-slate-300 text-base sm:text-lg">{t("hero")}</p>
         </div>
       </AppStoreMarquee>
 
-      <section className="py-20 bg-white">
+      <section className="py-14 sm:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-extrabold text-[#0f172a] mb-10 text-center">{t("programsTitle")}</h2>
-          <div className="grid md:grid-cols-2 gap-6 mb-16">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-[#0f172a] mb-8 sm:mb-10 text-center">{t("programsTitle")}</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-12 sm:mb-16">
             {programs.map((p) => (
-              <div key={p.title} className="border border-slate-200 rounded-2xl p-6 hover:border-[#c0392b]/40 hover:shadow-md transition-all">
+              <div key={p.title} className="border border-slate-200 rounded-2xl p-5 sm:p-6 hover:border-[#c0392b]/40 hover:shadow-md transition-all">
                 <h3 className="font-bold text-[#0f172a] mb-2">{p.title}</h3>
                 <p className="text-slate-500 text-sm mb-4">{p.desc}</p>
                 <div className="text-xs text-slate-400 space-y-1">
@@ -71,10 +71,10 @@ function StudyUKContent() {
             ))}
           </div>
 
-          <h2 className="text-2xl font-extrabold text-[#0f172a] mb-8 text-center">Partner Cities in the UK</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-[#0f172a] mb-6 sm:mb-8 text-center">Partner Cities in the UK</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {cities.map((city) => (
-              <div key={city.name} className={`${city.color} rounded-2xl p-6 text-white`}>
+              <div key={city.name} className={`${city.color} rounded-2xl p-4 sm:p-6 text-white`}>
                 <h3 className="font-bold text-xl mb-2">{city.name}</h3>
                 <p className="text-white/80 text-sm">{city.desc}</p>
               </div>

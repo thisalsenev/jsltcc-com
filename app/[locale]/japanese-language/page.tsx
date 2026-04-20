@@ -31,20 +31,20 @@ function JapaneseLangContent() {
 
   return (
     <>
-      <section className="bg-[#0f172a] py-24 px-4">
+      <section className="bg-[#0f172a] py-16 sm:py-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-[#c0392b] font-semibold text-sm uppercase tracking-widest mb-3">Courses</p>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-5">{t("title")}</h1>
-          <p className="text-slate-300 text-lg">{t("hero")}</p>
+          <p className="text-[#c0392b] font-semibold text-xs sm:text-sm uppercase tracking-widest mb-3">Courses</p>
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-white mb-4 sm:mb-5">{t("title")}</h1>
+          <p className="text-slate-300 text-base sm:text-lg">{t("hero")}</p>
         </div>
       </section>
 
-      <section className="py-20 bg-white">
+      <section className="py-14 sm:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-extrabold text-[#0f172a] mb-10 text-center">{t("coursesTitle")}</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-[#0f172a] mb-8 sm:mb-10 text-center">{t("coursesTitle")}</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {courses.map((course) => (
-              <div key={course.title} className="border border-slate-200 rounded-2xl p-6 hover:border-[#c0392b]/40 hover:shadow-md transition-all flex flex-col">
+              <div key={course.title} className="border border-slate-200 rounded-2xl p-5 sm:p-6 hover:border-[#c0392b]/40 hover:shadow-md transition-all flex flex-col">
                 <h3 className="font-bold text-[#0f172a] mb-2">{course.title}</h3>
                 <p className="text-slate-500 text-sm mb-4 leading-relaxed flex-1">{course.desc}</p>
                 <div className="text-xs text-slate-400 space-y-1 mb-4">

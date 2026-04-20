@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Send, MapPin, Phone, Mail, CheckCircle } from "lucide-react";
+
 import { useSearchParams } from "next/navigation";
 
 export default function ContactCTA() {
@@ -31,9 +32,9 @@ export default function ContactCTA() {
   };
 
   return (
-    <section className="py-20 bg-[#0f172a]" id="contact-cta">
+    <section className="py-14 sm:py-20 bg-[#0f172a]" id="contact-cta">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
           {/* Left */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -69,7 +70,7 @@ export default function ContactCTA() {
                   </a>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
+<div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center shrink-0">
                   <Mail size={18} className="text-[#c0392b]" />
                 </div>
@@ -89,7 +90,7 @@ export default function ContactCTA() {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-white rounded-2xl p-8 shadow-2xl"
+            className="bg-white rounded-2xl p-5 sm:p-8 shadow-2xl"
           >
             {submitted ? (
               <div className="text-center py-10">
