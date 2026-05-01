@@ -113,6 +113,27 @@ body {
 .aurora-4 { animation: aurora4 18s ease-in-out infinite; }
 .aurora-5 { animation: aurora5 24s ease-in-out infinite; }
 
+/* ── Student Portal pill — flowing aurora gradient ── */
+@keyframes portalAurora {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-portal-aurora {
+  background: linear-gradient(
+    110deg,
+    #052e23 0%,
+    #047857 18%,
+    #10b981 32%,
+    #022c22 48%,
+    #059669 62%,
+    #0f3a2e 80%,
+    #052e23 100%
+  );
+  background-size: 300% 300%;
+  animation: portalAurora 6s ease infinite;
+}
+
 /* ── AppStoreMarquee — infinite vertical scroll lanes ── */
 @keyframes scroll-up {
   from { transform: translateY(0); }

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { Menu, X, ChevronDown, Globe } from "lucide-react";
+import { Menu, X, ChevronDown, Globe, GraduationCap } from "lucide-react";
 import Image from "next/image";
 
 const localeLabels: Record<string, string> = {
@@ -43,30 +43,13 @@ export default function Header() {
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 flex items-center h-16 transition-all duration-300 overflow-hidden ${isScrolled ? "bg-[#0f172a] shadow-lg" : "bg-[#0f172a]/95 backdrop-blur-sm"}`}>
-
-      {/* ── Floating pills ── */}
-      <style>{`
-        @keyframes pill1 { 0%,100%{transform:translateX(0px) translateY(0px)} 40%{transform:translateX(18px) translateY(-6px)} 70%{transform:translateX(-10px) translateY(4px)} }
-        @keyframes pill2 { 0%,100%{transform:translateX(0px) translateY(0px)} 35%{transform:translateX(-20px) translateY(5px)} 65%{transform:translateX(12px) translateY(-4px)} }
-        @keyframes pill3 { 0%,100%{transform:translateX(0px) translateY(0px)} 45%{transform:translateX(14px) translateY(7px)} 75%{transform:translateX(-8px) translateY(-5px)} }
-        @keyframes pill4 { 0%,100%{transform:translateX(0px) translateY(0px)} 30%{transform:translateX(-16px) translateY(-4px)} 60%{transform:translateX(10px) translateY(6px)} }
-        @keyframes pill5 { 0%,100%{transform:translateX(0px) translateY(0px)} 50%{transform:translateX(20px) translateY(-3px)} 80%{transform:translateX(-6px) translateY(5px)} }
-        @keyframes pill6 { 0%,100%{transform:translateX(0px) translateY(0px)} 38%{transform:translateX(-14px) translateY(6px)} 68%{transform:translateX(16px) translateY(-5px)} }
-      `}</style>
-
-      <span aria-hidden style={{position:"absolute",top:"12px",left:"8%",  width:"90px", height:"22px",borderRadius:"9999px",background:"rgba(192,57,43,0.18)", border:"1px solid rgba(192,57,43,0.25)",animation:"pill1 22s ease-in-out infinite",willChange:"transform"}} />
-      <span aria-hidden style={{position:"absolute",top:"20px",left:"22%", width:"120px",height:"18px",borderRadius:"9999px",background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.12)",animation:"pill2 28s ease-in-out infinite",willChange:"transform"}} />
-      <span aria-hidden style={{position:"absolute",top:"8px", left:"42%", width:"70px", height:"26px",borderRadius:"9999px",background:"rgba(192,57,43,0.10)",border:"1px solid rgba(192,57,43,0.18)",animation:"pill3 19s ease-in-out infinite",willChange:"transform"}} />
-      <span aria-hidden style={{position:"absolute",top:"22px",left:"58%", width:"100px",height:"20px",borderRadius:"9999px",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.10)",animation:"pill4 32s ease-in-out infinite",willChange:"transform"}} />
-      <span aria-hidden style={{position:"absolute",top:"10px",left:"74%", width:"80px", height:"24px",borderRadius:"9999px",background:"rgba(192,57,43,0.13)",border:"1px solid rgba(192,57,43,0.20)",animation:"pill5 24s ease-in-out infinite",willChange:"transform"}} />
-      <span aria-hidden style={{position:"absolute",top:"18px",left:"88%", width:"110px",height:"19px",borderRadius:"9999px",background:"rgba(255,255,255,0.07)",border:"1px solid rgba(255,255,255,0.11)",animation:"pill6 27s ease-in-out infinite",willChange:"transform"}} />
+    <header className={`fixed top-0 left-0 right-0 z-50 flex items-center h-16 transition-all duration-300 ${isScrolled ? "bg-white shadow-lg" : "bg-white/95 backdrop-blur-sm"}`}>
 
       {/* LEFT — logo */}
       <a href={`/${locale}`} className="flex items-center px-4 shrink-0 h-full">
         <div className="relative w-16 h-16 shrink-0">
           <Image
-            src="/images/logo/Untitled (1).png"
+            src="/images/logo/Untitled.png"
             alt="JSLTCC Logo"
             fill
             className="object-contain rounded-lg"
@@ -83,7 +66,7 @@ export default function Header() {
             <a
               key={link.href}
               href={`/${locale}${link.href === "/" ? "" : link.href}`}
-              className="text-slate-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium transition-all"
+              className="text-slate-700 hover:text-white bg-black/8 hover:bg-black/20 px-3 py-2 rounded-full text-sm font-medium transition-all"
             >
               {link.label}
             </a>
@@ -91,6 +74,17 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-3 ml-auto">
+          {/* Student Portal — animated aurora pill */}
+          <a
+            href="https://student.jsltcc.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-1.5 animate-portal-aurora text-white text-sm font-semibold px-4 py-2 rounded-full shadow-md ring-1 ring-emerald-300/40 hover:scale-105 transition-transform"
+          >
+            <GraduationCap size={15} className="shrink-0" />
+            <span>{t("studentPortal")}</span>
+          </a>
+
           {/* Language switcher */}
           <div className="relative">
             <button
@@ -140,6 +134,17 @@ export default function Header() {
       {/* Mobile menu */}
       {mobileOpen && (
         <div className="absolute top-full left-0 right-0 xl:hidden bg-[#0f172a] border-t border-white/10 px-4 py-3 space-y-0.5 shadow-2xl max-h-[calc(100vh-4rem)] overflow-y-auto">
+          {/* Student Portal — animated aurora pill (mobile) */}
+          <a
+            href="https://student.jsltcc.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMobileOpen(false)}
+            className="flex items-center justify-center gap-2 animate-portal-aurora text-white text-[15px] font-semibold px-4 py-3.5 rounded-full shadow-md ring-1 ring-emerald-300/40 mb-2"
+          >
+            <GraduationCap size={17} className="shrink-0" />
+            <span>{t("studentPortal")}</span>
+          </a>
           {navLinks.map((link) => (
             <a
               key={link.href}
