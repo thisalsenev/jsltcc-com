@@ -2,14 +2,14 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { motion } from "framer-motion";
-import { BookOpen, Plane, Globe, FileText, ArrowRight } from "lucide-react";
+import { BookOpen, Plane, Globe, GraduationCap, ArrowRight } from "lucide-react";
 import AppStoreMarquee from "./AppStoreMarquee";
 
 const services = [
-  { key: "japaneseLanguage", icon: BookOpen, href: "/japanese-language",      iconClass: "bg-blue-500/20  text-blue-300  group-hover:bg-blue-500/35"  },
-  { key: "studyInJapan",     icon: Plane,    href: "/study-in-japan",          iconClass: "bg-red-500/20   text-red-300   group-hover:bg-red-500/35"   },
-  { key: "studyInUK",        icon: Globe,    href: "/study-in-united-kingdom", iconClass: "bg-green-500/20 text-green-300 group-hover:bg-green-500/35" },
-  { key: "visaServices",     icon: FileText, href: "/visa-services",           iconClass: "bg-amber-500/20 text-amber-300 group-hover:bg-amber-500/35" },
+  { key: "japaneseLanguage", icon: BookOpen,       href: "/japanese-language",      iconClass: "bg-blue-500/20  text-blue-300  group-hover:bg-blue-500/35"  },
+  { key: "studyInJapan",     icon: Plane,          href: "/study-in-japan",          iconClass: "bg-red-500/20   text-red-300   group-hover:bg-red-500/35"   },
+  { key: "studyInUK",        icon: Globe,          href: "/study-in-united-kingdom", iconClass: "bg-green-500/20 text-green-300 group-hover:bg-green-500/35" },
+  { key: "topjExam",         icon: GraduationCap,  href: "/topj-exam",               iconClass: "bg-amber-500/20 text-amber-300 group-hover:bg-amber-500/35" },
 ];
 
 export default function ServicesGrid() {

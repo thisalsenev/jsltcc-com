@@ -41,6 +41,10 @@
     "visaServices": {
       "title": "ビザサービス",
       "desc": "留学・就労・研修ビザの申請サポート。"
+    },
+    "topjExam": {
+      "title": "TOPJ試験",
+      "desc": "公式TOPJ試験会場として、オンライン申込と総合的な試験対策をご提供します。"
     }
   },
   "schools": {

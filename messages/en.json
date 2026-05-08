@@ -41,6 +41,10 @@
     "visaServices": {
       "title": "Visa Services",
       "desc": "Student, working, and training visa assistance with experienced counsellors."
+    },
+    "topjExam": {
+      "title": "TOPJ Exam",
+      "desc": "Official TOPJ examination centre with online registration and full preparation support."
     }
   },
   "schools": {
