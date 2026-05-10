@@ -1,18 +1,19 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Instrument_Serif } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import LoadingScreen from "@/components/LoadingScreen";
+import { organizationJsonLd } from "@/lib/seo";
 import "../globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "JSLTCC — Japan Sri Lanka Technology & Cultural Centre",
-  description:
-    "Your gateway to Japan and Australia. Japanese language courses, study abroad placements, and visa services since 2002.",
-};
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+});
 
 export default async function LocaleLayout({
   children,
@@ -25,11 +26,18 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) notFound();
 
   const messages = await getMessages();
+  const orgSchema = organizationJsonLd();
 
   return (
-    <html lang={locale} className="scroll-smooth">
+    <html lang={locale} className={`scroll-smooth ${instrumentSerif.variable}`}>
       <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
+        {/* EducationalOrganization schema — global, server-rendered for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+        />
         <NextIntlClientProvider messages={messages}>
+          <LoadingScreen />
           {children}
         </NextIntlClientProvider>
       </body>

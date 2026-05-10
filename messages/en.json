@@ -174,5 +174,47 @@
   "activities": {
     "title": "Activities & Events",
     "hero": "Celebrating culture, learning, and achievement together."
+  },
+  "seo": {
+    "home": {
+      "title": "JSLTCC — Japanese Language Classes & Study Abroad in Sri Lanka",
+      "description": "Japan Sri Lanka Technology & Cultural Centre. Learn Japanese, prepare for JLPT and TOPJ, and study abroad in Japan, UK, and Australia. Trusted by 5,000+ Sri Lankan students since 2002."
+    },
+    "about": {
+      "title": "About JSLTCC | Japanese Language School in Sri Lanka",
+      "description": "Since 2002, JSLTCC has been Sri Lanka's gateway to Japan. Our story, mission, and the team behind 5,000+ student success stories."
+    },
+    "activities": {
+      "title": "Cultural Events & Activities | JSLTCC",
+      "description": "Japanese cultural events, language exchange meetups, and student activities at JSLTCC's Colombo centre."
+    },
+    "contact": {
+      "title": "Contact JSLTCC | Get in Touch",
+      "description": "Reach JSLTCC's Colombo office for course enrolment, study-abroad consultation, or TOPJ exam registration."
+    },
+    "japaneseLanguage": {
+      "title": "Japanese Language Courses | JLPT N5–N1 Classes in Sri Lanka",
+      "description": "Learn Japanese from N5 beginner to N1 advanced. Native and Sri Lankan instructors, JLPT and TOPJ exam prep, weekend and weekday batches in Colombo."
+    },
+    "studyInJapan": {
+      "title": "Study in Japan from Sri Lanka | Universities & Language Schools",
+      "description": "Placement at Japanese universities and language schools with full visa support. JSLTCC has placed thousands of Sri Lankan students at top institutions across Japan."
+    },
+    "studyInUK": {
+      "title": "Study in the United Kingdom from Sri Lanka | UK Universities",
+      "description": "UK study-abroad programs and university placement assistance. Personalised guidance from JSLTCC's experienced counsellors."
+    },
+    "studyInAustralia": {
+      "title": "Study in Australia from Sri Lanka | Universities & Pathways",
+      "description": "Pathway programs and university placement in Australia. End-to-end support with admission, visa, and pre-departure preparation."
+    },
+    "topjExam": {
+      "title": "TOPJ Exam Registration | Official Test Centre in Sri Lanka",
+      "description": "JSLTCC is the official TOPJ examination centre in Sri Lanka. Online registration, preparation courses, and full examiner support."
+    },
+    "visaServices": {
+      "title": "Japan Student & Working Visa Services | JSLTCC Sri Lanka",
+      "description": "Student, working, and training visa assistance for Japan. Document preparation, embassy interview prep, and end-to-end support from experienced counsellors."
+    }
   }
 }

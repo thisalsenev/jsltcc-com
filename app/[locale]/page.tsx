@@ -8,6 +8,16 @@ import HowItWorks from "@/components/HowItWorks";
 import Testimonials from "@/components/Testimonials";
 import ContactCTA from "@/components/ContactCTA";
 import Footer from "@/components/Footer";
+import { buildMetadata } from "@/lib/seo";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildMetadata({ locale, path: "", namespace: "home" });
+}
 
 export default function HomePage() {
   return (
