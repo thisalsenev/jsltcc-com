@@ -54,6 +54,11 @@ export async function buildMetadata({
     metadataBase: new URL(SITE_URL),
     title,
     description,
+    icons: {
+      icon: [{ url: "/images/logo/jsltcc-favicon.png", type: "image/png" }],
+      apple: "/images/logo/jsltcc-favicon.png",
+      shortcut: "/images/logo/jsltcc-favicon.png",
+    },
     alternates: {
       canonical: url,
       languages,
