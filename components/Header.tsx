@@ -49,8 +49,8 @@ export default function Header() {
       <a href={`/${locale}`} className="flex items-center px-4 shrink-0 h-full">
         <div className="relative w-16 h-16 shrink-0">
           <Image
-            src="/images/logo/Untitled.png"
-            alt="JSLTCC Logo"
+            src="/images/logo/jsltcc-logo.png"
+            alt="JSLTCC — Japan Sri Lanka Technology & Cultural Centre logo"
             fill
             className="object-contain rounded-lg"
             sizes="64px"

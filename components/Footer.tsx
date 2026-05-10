@@ -55,8 +55,8 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <div className="relative w-12 h-14 shrink-0">
                 <Image
-                  src="/images/logo/Untitled (1).png"
-                  alt="JSLTCC Logo"
+                  src="/images/logo/jsltcc-logo.png"
+                  alt="JSLTCC — Japan Sri Lanka Technology & Cultural Centre logo"
                   fill
                   className="object-contain rounded-sm"
                   sizes="48px"

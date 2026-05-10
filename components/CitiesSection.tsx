@@ -68,7 +68,7 @@ const cities = [
     region: "Kanto",
     schools: 3,
     description: "Close to Tokyo with a relaxed pace and growing student scene.",
-    image: "/images/cities/Chiba .webp",
+    image: "/images/cities/Chiba.webp",
   },
   {
     name: "Saitama",

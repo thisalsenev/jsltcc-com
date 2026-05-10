@@ -17,7 +17,7 @@ const cityImages: Record<string, string> = {
   Kobe: "/images/cities/kobe.jpg",
   Hiroshima: "/images/cities/Hiroshima.jpg",
   Sapporo: "/images/cities/sapporo.jpg",
-  Chiba: "/images/cities/Chiba .webp",
+  Chiba: "/images/cities/Chiba.webp",
   Nagano: "/images/cities/Nagano.jpg",
 };
 

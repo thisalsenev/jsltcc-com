@@ -15,8 +15,8 @@ export async function generateMetadata({
 
 const historyPairs = [
   { label: "Our Beginnings", before: "/images/about/history1.jpg",   after: "/images/about/history2.jpg"   },
-  { label: "Growing Forward", before: "/images/about/history 3.jpg", after: "/images/about/history 4.jpg" },
-  { label: "Today",            before: "/images/about/history 5.jpg", after: "/images/about/history 6.jpg" },
+  { label: "Growing Forward", before: "/images/about/history-3.jpg", after: "/images/about/history-4.jpg" },
+  { label: "Today",            before: "/images/about/history-5.jpg", after: "/images/about/history-6.jpg" },
 ];
 
 export default function AboutPage() {
