@@ -19,8 +19,6 @@ type BuildMetadataInput = {
   path: string;
   /** Translation namespace under `seo.*`, e.g. "home", "japaneseLanguage". */
   namespace: string;
-  /** Optional OG image path (under /public). Defaults to /og-default.png. */
-  ogImage?: string;
 };
 
 /** Build a complete <head> metadata object for a localized page:
@@ -35,7 +33,6 @@ export async function buildMetadata({
   locale,
   path,
   namespace,
-  ogImage = "/og-default.png",
 }: BuildMetadataInput): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: `seo.${namespace}` });
   const title = t("title");
@@ -48,15 +45,14 @@ export async function buildMetadata({
   }
   languages["x-default"] = `${SITE_URL}/${routing.defaultLocale}${path}`;
 
-  const ogUrl = `${SITE_URL}${ogImage}`;
-
   return {
     metadataBase: new URL(SITE_URL),
     title,
     description,
-    // Favicon handled by Next.js convention: app/icon.png + app/apple-icon.png
-    // Auto-emits content-hashed URLs that bust browser favicon caches on
-    // every file change.
+    // Favicon → Next.js convention: app/icon.png + app/apple-icon.png
+    // OG/Twitter image → Next.js convention: app/opengraph-image.tsx +
+    //                    app/twitter-image.tsx (auto-hashed URLs that
+    //                    invalidate platform caches on every change)
     alternates: {
       canonical: url,
       languages,
@@ -68,13 +64,11 @@ export async function buildMetadata({
       siteName: "JSLTCC",
       type: "website",
       locale: OG_LOCALE[locale] ?? "en_US",
-      images: [{ url: ogUrl, width: 1200, height: 630, alt: "JSLTCC" }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [ogUrl],
     },
   };
 }
