@@ -54,11 +54,9 @@ export async function buildMetadata({
     metadataBase: new URL(SITE_URL),
     title,
     description,
-    icons: {
-      icon: [{ url: "/images/logo/jsltcc-favicon.png", type: "image/png" }],
-      apple: "/images/logo/jsltcc-favicon.png",
-      shortcut: "/images/logo/jsltcc-favicon.png",
-    },
+    // Favicon handled by Next.js convention: app/icon.png + app/apple-icon.png
+    // Auto-emits content-hashed URLs that bust browser favicon caches on
+    // every file change.
     alternates: {
       canonical: url,
       languages,
