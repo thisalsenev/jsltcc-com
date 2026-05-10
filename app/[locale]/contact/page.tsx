@@ -2,6 +2,16 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactCTA from "@/components/ContactCTA";
 import { useTranslations } from "next-intl";
+import { buildMetadata } from "@/lib/seo";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildMetadata({ locale, path: "/contact", namespace: "contact" });
+}
 
 export default function ContactPage() {
   return (

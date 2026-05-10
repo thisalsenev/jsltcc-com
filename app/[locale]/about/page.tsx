@@ -2,6 +2,16 @@ import { useTranslations } from "next-intl";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Image from "next/image";
+import { buildMetadata } from "@/lib/seo";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildMetadata({ locale, path: "/about", namespace: "about" });
+}
 
 const historyPairs = [
   { label: "Our Beginnings", before: "/images/about/history1.jpg",   after: "/images/about/history2.jpg"   },

@@ -2,6 +2,16 @@ import { useTranslations } from "next-intl";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AppStoreMarquee from "@/components/AppStoreMarquee";
+import { buildMetadata } from "@/lib/seo";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildMetadata({ locale, path: "/study-in-united-kingdom", namespace: "studyInUK" });
+}
 
 // Folder name has a space → URL-encode as %20
 const UK_IMAGES = [

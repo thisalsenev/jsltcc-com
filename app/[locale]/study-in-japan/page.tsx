@@ -3,6 +3,16 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SchoolsSection from "@/components/SchoolsSection";
 import CitiesSection from "@/components/CitiesSection";
+import { buildMetadata } from "@/lib/seo";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildMetadata({ locale, path: "/study-in-japan", namespace: "studyInJapan" });
+}
 import AppStoreMarquee from "@/components/AppStoreMarquee";
 
 const JAPAN_IMAGES = [
