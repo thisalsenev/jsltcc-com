@@ -76,7 +76,7 @@ export default function Header() {
         <div className="flex items-center gap-3 ml-auto">
           {/* Student Portal — animated aurora pill */}
           <a
-            href="https://student.jsltcc.com/sign-in"
+            href="https://student.jsltcc.com"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:inline-flex items-center gap-1.5 animate-portal-aurora text-white text-sm font-semibold px-4 py-2 rounded-full shadow-md ring-1 ring-emerald-300/40 hover:scale-105 transition-transform"
@@ -136,7 +136,7 @@ export default function Header() {
         <div className="absolute top-full left-0 right-0 xl:hidden bg-[#0f172a] border-t border-white/10 px-4 py-3 space-y-0.5 shadow-2xl max-h-[calc(100vh-4rem)] overflow-y-auto">
           {/* Student Portal — animated aurora pill (mobile) */}
           <a
-            href="https://student.jsltcc.com/sign-in"
+            href="https://student.jsltcc.com"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMobileOpen(false)}
