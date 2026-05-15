@@ -33,10 +33,10 @@ export default function AppStoreMarquee({
 }: AppStoreMarqueeProps) {
   const imgs = images ?? DEFAULT_IMAGES;
 
-  // Build lanes — 4× copies so there are never gaps on any screen size
+  // Build lanes — 2× copies is enough for a seamless translateY(-50%) loop
   const lanes = LANE_DURATIONS.map((duration, i) => {
     const rotated = [...imgs.slice(i * 2 % imgs.length), ...imgs.slice(0, i * 2 % imgs.length)];
-    const filled  = [...rotated, ...rotated, ...rotated, ...rotated];
+    const filled  = [...rotated, ...rotated];
     return {
       images:    i % 2 === 0 ? filled : [...filled].reverse(),
       direction: i % 2 === 0 ? "up" : "down",
@@ -72,7 +72,7 @@ export default function AppStoreMarquee({
                   key={`${laneIdx}-${imgIdx}`}
                   src={src}
                   alt=""
-                  loading="eager"
+                  loading="lazy"
                   decoding="async"
                   /* Mobile: tall portrait boxes (3/4). Desktop: square (1/1).
                      Pure CSS — no JS hydration delay. */

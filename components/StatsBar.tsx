@@ -1,36 +1,46 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 function Counter({ end, suffix = "" }: { end: number; suffix?: string }) {
-  const [count, setCount] = useState(0);
   const ref     = useRef<HTMLDivElement>(null);
   const started = useRef(false);
 
   useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.textContent = `0${suffix}`;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !started.current) {
-          started.current = true;
-          let start = 0;
-          const step = (end / 2000) * 16;
-          const timer = setInterval(() => {
-            start += step;
-            if (start >= end) { setCount(end); clearInterval(timer); }
-            else               { setCount(Math.floor(start)); }
-          }, 16);
-        }
+        if (!entry.isIntersecting || started.current) return;
+        started.current = true;
+        observer.disconnect();
+
+        const duration = 2000;
+        const t0       = performance.now();
+        let   rafId    = 0;
+
+        const tick = (now: number) => {
+          const p = Math.min(1, (now - t0) / duration);
+          const value = p === 1 ? end : Math.floor(end * p);
+          el.textContent = `${value.toLocaleString()}${suffix}`;
+          if (p < 1) rafId = requestAnimationFrame(tick);
+        };
+        rafId = requestAnimationFrame(tick);
+
+        return () => cancelAnimationFrame(rafId);
       },
       { threshold: 0.5 }
     );
-    if (ref.current) observer.observe(ref.current);
+    observer.observe(el);
     return () => observer.disconnect();
-  }, [end]);
+  }, [end, suffix]);
 
   return (
     <div ref={ref} className="text-3xl sm:text-4xl font-extrabold text-[#c0392b]">
-      {count.toLocaleString()}{suffix}
+      0{suffix}
     </div>
   );
 }

@@ -102,6 +102,14 @@ body {
   0%, 100% { transform: translate(0px,   0px);  }
   50%       { transform: translate(-20px, 28px); }
 }
+.topo-layer-1,
+.topo-layer-2,
+.topo-layer-3,
+.topo-layer-4 {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
 .topo-layer-1 { animation: topo-drift-1 22s ease-in-out infinite; }
 .topo-layer-2 { animation: topo-drift-2 31s ease-in-out infinite; }
 .topo-layer-3 { animation: topo-drift-3 39s ease-in-out infinite; }
@@ -144,5 +152,11 @@ body {
   to   { transform: translateY(0); }
 }
 /* Base classes — duration is overridden per-lane via inline style */
+.animate-scroll-up,
+.animate-scroll-down {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
 .animate-scroll-up   { animation: scroll-up   35s linear infinite; }
 .animate-scroll-down { animation: scroll-down 35s linear infinite; }

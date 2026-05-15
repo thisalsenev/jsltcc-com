@@ -22,8 +22,16 @@ export default function Header() {
   const [langOpen, setLangOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 20);
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -43,7 +51,7 @@ export default function Header() {
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 flex items-center h-16 transition-all duration-300 ${isScrolled ? "bg-white shadow-lg" : "bg-white/95 backdrop-blur-sm"}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 flex items-center h-16 transition-shadow duration-300 ${isScrolled ? "bg-white shadow-lg" : "bg-white/95"}`}>
 
       {/* LEFT — logo */}
       <a href={`/${locale}`} className="flex items-center px-4 shrink-0 h-full">

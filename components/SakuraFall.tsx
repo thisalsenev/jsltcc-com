@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 const random = (min: number, max: number) => Math.random() * (max - min) + min;
 
 export default function SakuraFall() {
   const [petals, setPetals] = useState<any[]>([]);
+  const [visible, setVisible] = useState(true);
+  const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const isMobile = window.innerWidth < 640;
@@ -22,15 +24,28 @@ export default function SakuraFall() {
     setPetals(generatedPetals);
   }, []);
 
-  if (petals.length === 0) return null;
+  // Stop animating once the hero scrolls out of view — saves work on every
+  // section below the fold.
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { threshold: 0 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  if (petals.length === 0) return <div ref={wrapRef} className="absolute inset-0 z-[2] pointer-events-none" />;
 
   return (
-    <div className="absolute inset-0 z-[2] overflow-hidden pointer-events-none">
-      {petals.map((petal) => (
+    <div ref={wrapRef} className="absolute inset-0 z-[2] overflow-hidden pointer-events-none">
+      {visible && petals.map((petal) => (
         <motion.div
           key={petal.id}
           className="absolute top-[-5%]"
-          style={{ left: petal.left, scale: petal.scale }}
+          style={{ left: petal.left, scale: petal.scale, willChange: "transform, opacity" }}
           initial={{ y: "-10vh", opacity: 0, rotate: 0 }}
           animate={{
             y: ["0vh", "110vh"],
