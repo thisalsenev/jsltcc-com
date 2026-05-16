@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { Menu, X, ChevronDown, Globe, GraduationCap } from "lucide-react";
 import Image from "next/image";
+import HeaderSwarm from "./HeaderSwarm";
 
 const localeLabels: Record<string, string> = {
   en: "EN",
@@ -51,8 +52,22 @@ export default function Header() {
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 flex items-center h-16 transition-shadow duration-300 ${isScrolled ? "bg-white shadow-lg" : "bg-white/95"}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 h-16 transition-shadow duration-300 ${isScrolled ? "bg-white shadow-lg" : "bg-white/95"}`}>
+      {/* Swarm + vignette in their own clipped box so the mobile drawer (which
+          drops below the header) isn't truncated by overflow-hidden. */}
+      <div className="absolute inset-0 overflow-hidden isolate pointer-events-none" aria-hidden>
+        <HeaderSwarm />
+        <div
+          className="absolute inset-0"
+          style={{
+            zIndex: 2,
+            background:
+              "linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 12%, rgba(255,255,255,0) 88%, rgba(255,255,255,1) 100%)",
+          }}
+        />
+      </div>
 
+      <div className="relative flex items-center h-full" style={{ zIndex: 3 }}>
       {/* LEFT — logo */}
       <a href={`/${locale}`} className="flex items-center px-4 shrink-0 h-full">
         <div className="relative w-16 h-16 shrink-0">
@@ -69,12 +84,12 @@ export default function Header() {
 
       {/* RIGHT — nav */}
       <div className="flex-1 flex items-center justify-between px-4 h-full">
-        <nav className="hidden xl:flex items-center gap-1">
+        <nav className="hidden xl:flex items-center gap-2">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={`/${locale}${link.href === "/" ? "" : link.href}`}
-              className="text-slate-700 hover:text-white bg-black/8 hover:bg-black/20 px-3 py-2 rounded-full text-sm font-medium transition-all"
+              className="text-slate-700 hover:text-slate-900 bg-white/70 hover:bg-white/90 backdrop-blur-md border border-white/60 px-3.5 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap"
             >
               {link.label}
             </a>
@@ -97,7 +112,7 @@ export default function Header() {
           <div className="relative">
             <button
               onClick={() => setLangOpen(!langOpen)}
-              className="flex items-center gap-1 text-slate-300 hover:text-white text-sm font-medium px-3 py-2 rounded-md hover:bg-white/10 active:bg-white/15 transition-all"
+              className="flex items-center gap-1 text-slate-700 hover:text-slate-900 text-sm font-medium px-3 py-1.5 rounded-full bg-white/70 hover:bg-white/90 backdrop-blur-md border border-white/60 transition-all"
             >
               <Globe size={14} />
               <span>{localeLabels[locale]}</span>
@@ -123,7 +138,7 @@ export default function Header() {
           {/* CTA */}
           <a
             href={`/${locale}/contact`}
-            className="hidden sm:inline-flex items-center bg-[#c0392b] hover:bg-[#e74c3c] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors shadow-md"
+            className="hidden sm:inline-flex items-center bg-[#c0392b] hover:bg-[#e74c3c] text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors shadow-md"
           >
             {t("enquireNow")}
           </a>
@@ -131,12 +146,13 @@ export default function Header() {
           {/* Mobile burger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="xl:hidden text-white p-2.5 -mr-1 rounded-lg active:bg-white/10"
+            className="xl:hidden text-slate-700 p-2.5 -mr-1 rounded-full bg-white/70 backdrop-blur-md border border-white/60 active:bg-white/90"
             aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
+      </div>
       </div>
 
       {/* Mobile menu */}
