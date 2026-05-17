@@ -11,7 +11,7 @@ import { useEffect, useRef } from "react";
  * down from the desktop demo because the canvas is short.
  */
 export default function HeaderSwarm({
-  particleCount = 900,
+  particleCount = 2300,
   speed = 0.6,
   flowScale = 0.0115,
   swirl = 0.5,
