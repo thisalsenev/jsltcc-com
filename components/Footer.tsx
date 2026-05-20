@@ -154,7 +154,15 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/5 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
           <span>© {new Date().getFullYear()} JSLTCC. {t("rights")}</span>
-          <span className="text-slate-600">Japan Sri Lanka Technology & Cultural Centre</span>
+          <div className="flex items-center gap-4">
+            <a
+              href={`/${locale}/about/privacy-policy`}
+              className="hover:text-white transition-colors"
+            >
+              Privacy Policy
+            </a>
+            <span className="text-slate-600 hidden sm:inline">Japan Sri Lanka Technology &amp; Cultural Centre</span>
+          </div>
         </div>
       </div>
     </footer>
