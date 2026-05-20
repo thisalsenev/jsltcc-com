@@ -9,6 +9,7 @@ const SITE_URL = (
 const ROUTES = [
   "",
   "/about",
+  "/about/privacy-policy",
   "/activities",
   "/contact",
   "/japanese-language",
@@ -28,6 +29,7 @@ const PRIORITY: Record<string, number> = {
   "/study-in-australia": 0.8,
   "/visa-services": 0.7,
   "/about": 0.6,
+  "/about/privacy-policy": 0.3,
   "/activities": 0.6,
   "/contact": 0.6,
 };
