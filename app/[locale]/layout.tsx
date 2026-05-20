@@ -4,6 +4,7 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import LoadingScreen from "@/components/LoadingScreen";
+import MetaPixel from "@/components/MetaPixel";
 import { organizationJsonLd } from "@/lib/seo";
 import "../globals.css";
 
@@ -31,6 +32,8 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`scroll-smooth ${instrumentSerif.variable}`}>
       <body className={`${inter.className} antialiased min-h-screen flex flex-col`}>
+        {/* Meta Pixel — fires PageView on initial load + every route change */}
+        <MetaPixel />
         {/* EducationalOrganization schema — global, server-rendered for SEO */}
         <script
           type="application/ld+json"
