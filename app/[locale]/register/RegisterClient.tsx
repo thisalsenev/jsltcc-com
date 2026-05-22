@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, type CSSProperties } from "react";
+import Image from "next/image";
 import ArrowsBg from "./ArrowsBg";
 
 // Design tokens — ported from the Claude Design handoff (page.jsx).
@@ -217,34 +218,41 @@ function Hero() {
           padding: "64px 22px 36px",
         }}
       >
-        {/* Logo mark */}
+        {/* Logo mark — real JSLTCC logo */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 10,
+            gap: 12,
             marginBottom: 48,
           }}
         >
           <div
             style={{
-              width: 32,
-              height: 32,
-              borderRadius: 8,
-              background: `linear-gradient(135deg, ${C.magenta}, ${C.blue})`,
-              display: "grid",
-              placeItems: "center",
-              fontFamily: '"Noto Serif JP", serif',
-              color: "#fff",
-              fontWeight: 700,
-              fontSize: 16,
-              letterSpacing: "-0.02em",
+              position: "relative",
+              width: 44,
+              height: 44,
+              flexShrink: 0,
             }}
           >
-            日
+            <Image
+              src="/images/logo/jsltcc-logo.png"
+              alt="JSLTCC logo"
+              fill
+              priority
+              sizes="44px"
+              className="object-contain"
+            />
           </div>
           <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
-            <span style={{ fontSize: 13, fontWeight: 700, color: C.text, letterSpacing: "0.02em" }}>
+            <span
+              style={{
+                fontSize: 14,
+                fontWeight: 700,
+                color: C.text,
+                letterSpacing: "0.02em",
+              }}
+            >
               JSLTCC
             </span>
             <span
