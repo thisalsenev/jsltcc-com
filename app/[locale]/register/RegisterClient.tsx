@@ -410,7 +410,7 @@ function InfoCards() {
       <InfoCard
         label="Class format"
         title="In-person classes"
-        sub="Held at our Colombo centre"
+        sub="Held at our Gampaha Centre"
         tint={C.blue}
         icon={<IconPin />}
       />
