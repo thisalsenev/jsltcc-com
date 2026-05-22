@@ -135,12 +135,14 @@ export default function Header() {
             )}
           </div>
 
-          {/* CTA */}
+          {/* Primary CTA — registration is the main conversion target. The
+              previous "Enquire Now" CTA pointed at /contact; the Contact
+              page is still reachable via the nav link above. */}
           <a
-            href={`/${locale}/contact`}
+            href={`/${locale}/register`}
             className="hidden sm:inline-flex items-center bg-[#c0392b] hover:bg-[#e74c3c] text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors shadow-md"
           >
-            {t("enquireNow")}
+            {t("register")}
           </a>
 
           {/* Mobile burger */}
@@ -181,10 +183,11 @@ export default function Header() {
           ))}
           <div className="pt-3 mt-1 border-t border-white/10">
             <a
-              href={`/${locale}/contact`}
+              href={`/${locale}/register`}
+              onClick={() => setMobileOpen(false)}
               className="block text-center bg-[#c0392b] hover:bg-[#e74c3c] active:bg-[#a93226] text-white text-[15px] font-semibold px-4 py-3.5 rounded-xl transition-colors mt-1"
             >
-              {t("enquireNow")}
+              {t("register")}
             </a>
           </div>
         </div>
