@@ -273,8 +273,7 @@ function Hero() {
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: 6,
-              padding: "5px 10px 5px 8px",
+              padding: "5px 12px",
               borderRadius: 999,
               background: "rgba(216, 89, 239, 0.14)",
               border: "1px solid rgba(216, 89, 239, 0.32)",
@@ -285,15 +284,6 @@ function Hero() {
               marginBottom: 18,
             }}
           >
-            <span
-              style={{
-                width: 6,
-                height: 6,
-                borderRadius: "50%",
-                background: C.magenta,
-                boxShadow: `0 0 8px ${C.magenta}`,
-              }}
-            />
             2026 INTAKE · NOW OPEN
           </span>
 
