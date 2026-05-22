@@ -13,6 +13,7 @@ const ROUTES = [
   "/activities",
   "/contact",
   "/japanese-language",
+  "/register",
   "/study-in-australia",
   "/study-in-japan",
   "/study-in-united-kingdom",
@@ -23,6 +24,7 @@ const ROUTES = [
 const PRIORITY: Record<string, number> = {
   "": 1.0,
   "/japanese-language": 0.9,
+  "/register": 0.95,
   "/topj-exam": 0.9,
   "/study-in-japan": 0.9,
   "/study-in-united-kingdom": 0.8,
