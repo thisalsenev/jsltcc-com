@@ -139,6 +139,25 @@ export default function RegisterClient() {
         minHeight: "100vh",
       }}
     >
+      {/* Desktop-only overrides. Mobile layout stays untouched — the inline
+          styles set the mobile defaults; these rules only fire ≥ 768px. */}
+      <style>{`
+        @media (min-width: 768px) {
+          .rp-hero { max-width: 960px !important; margin: 0 auto !important; }
+          .rp-hero-inner { padding: 96px 48px 64px !important; max-width: 720px !important; }
+          .rp-logo-mark { width: 72px !important; height: 72px !important; }
+          .rp-logo-name { font-size: 18px !important; letter-spacing: 0.02em !important; }
+          .rp-logo-sub { font-size: 12px !important; letter-spacing: 0.08em !important; }
+          .rp-logo-row { gap: 16px !important; margin-bottom: 64px !important; }
+          .rp-badge { font-size: 13px !important; padding: 7px 16px !important; }
+          .rp-title { font-size: 72px !important; margin-bottom: 24px !important; }
+          .rp-subtitle { font-size: 18px !important; max-width: 560px !important; line-height: 1.5 !important; }
+          .rp-content-column { max-width: 720px !important; }
+          .rp-info-section { padding: 48px 32px 16px !important; gap: 16px !important; }
+          .rp-cta-section { padding: 24px 32px 48px !important; }
+          .rp-form-section { padding: 40px 32px 56px !important; }
+        }
+      `}</style>
       {submitted ? (
         <SuccessState data={submitted} onReset={reset} />
       ) : (
@@ -169,6 +188,7 @@ export default function RegisterClient() {
 function ContentColumn({ children }: { children: React.ReactNode }) {
   return (
     <div
+      className="rp-content-column"
       style={{
         maxWidth: 600,
         margin: "0 auto",
@@ -187,6 +207,7 @@ function ContentColumn({ children }: { children: React.ReactNode }) {
 function Hero() {
   return (
     <section
+      className="rp-hero"
       style={{
         position: "relative",
         overflow: "hidden",
@@ -211,6 +232,7 @@ function Hero() {
       />
 
       <div
+        className="rp-hero-inner"
         style={{
           position: "relative",
           maxWidth: 600,
@@ -220,6 +242,7 @@ function Hero() {
       >
         {/* Logo mark — real JSLTCC logo */}
         <div
+          className="rp-logo-row"
           style={{
             display: "flex",
             alignItems: "center",
@@ -228,6 +251,7 @@ function Hero() {
           }}
         >
           <div
+            className="rp-logo-mark"
             style={{
               position: "relative",
               width: 44,
@@ -240,12 +264,13 @@ function Hero() {
               alt="JSLTCC logo"
               fill
               priority
-              sizes="44px"
+              sizes="(min-width: 768px) 72px, 44px"
               className="object-contain"
             />
           </div>
           <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
             <span
+              className="rp-logo-name"
               style={{
                 fontSize: 14,
                 fontWeight: 700,
@@ -256,6 +281,7 @@ function Hero() {
               JSLTCC
             </span>
             <span
+              className="rp-logo-sub"
               style={{
                 fontSize: 10.5,
                 color: C.textMute,
@@ -270,6 +296,7 @@ function Hero() {
 
         <div style={{ position: "relative", maxWidth: 480 }}>
           <span
+            className="rp-badge"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -288,6 +315,7 @@ function Hero() {
           </span>
 
           <h1
+            className="rp-title"
             style={{
               fontFamily: '"Bricolage Grotesque", "Plus Jakarta Sans", sans-serif',
               fontSize: "clamp(38px, 5.5vw, 56px)",
@@ -314,6 +342,7 @@ function Hero() {
           </h1>
 
           <p
+            className="rp-subtitle"
             style={{
               fontSize: 15,
               lineHeight: 1.55,
@@ -337,6 +366,7 @@ function Hero() {
 function InfoCards() {
   return (
     <section
+      className="rp-info-section"
       style={{
         padding: "28px 18px 8px",
         background: C.bg2,
@@ -530,7 +560,7 @@ function IconSunMoon() {
  * ============================================================ */
 function CtaBlock({ onCta }: { onCta: () => void }) {
   return (
-    <section style={{ padding: "20px 18px 32px", background: C.bg2 }}>
+    <section className="rp-cta-section" style={{ padding: "20px 18px 32px", background: C.bg2 }}>
       <button
         type="button"
         onClick={onCta}
@@ -600,6 +630,7 @@ function FormSection({
     <section
       ref={ref}
       id="register"
+      className="rp-form-section"
       style={{
         padding: "28px 20px 40px",
         background: `linear-gradient(180deg, ${C.bg2} 0%, ${C.bg} 100%)`,
