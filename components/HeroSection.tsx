@@ -34,16 +34,6 @@ export default function HeroSection() {
             {/* ── LEFT — text ── */}
             <div className="flex-1 max-w-[580px]">
 
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-2 text-[#f87171] text-xs sm:text-sm font-semibold mb-5 sm:mb-7 tracking-wide"
-              >
-                <span className="w-1.5 h-1.5 bg-[#f87171] rounded-full animate-pulse" />
-                Since 2002 — Trusted by 5,000+ Students
-              </motion.div>
-
               <motion.h1
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
