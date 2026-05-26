@@ -161,6 +161,12 @@ export default function Footer() {
             >
               Privacy Policy
             </a>
+            <a
+              href={`/${locale}/about/terms-of-use`}
+              className="hover:text-white transition-colors"
+            >
+              Terms of Use
+            </a>
             <span className="text-slate-600 hidden sm:inline">Japan Sri Lanka Technology &amp; Cultural Centre</span>
           </div>
         </div>
