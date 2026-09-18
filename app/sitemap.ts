@@ -1,15 +1,13 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
-
-const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://jsltcc.com"
-).replace(/\/$/, "");
+import { SITE_URL } from "@/lib/seo";
 
 /** All public routes under app/[locale]/. Update when adding new pages. */
 const ROUTES = [
   "",
   "/about",
   "/about/privacy-policy",
+  "/about/terms-of-use",
   "/activities",
   "/contact",
   "/japanese-language",
@@ -32,6 +30,7 @@ const PRIORITY: Record<string, number> = {
   "/visa-services": 0.7,
   "/about": 0.6,
   "/about/privacy-policy": 0.3,
+  "/about/terms-of-use": 0.3,
   "/activities": 0.6,
   "/contact": 0.6,
 };

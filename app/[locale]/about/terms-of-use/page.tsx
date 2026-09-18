@@ -2,12 +2,16 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ArrowLeft } from "lucide-react";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Terms of Use — JSLTCC",
-  description:
-    "Terms governing the use of JSLTCC's website, student portal, and online learning tools (including the AI Voice Partner).",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildMetadata({ locale, path: "/about/terms-of-use", namespace: "termsOfUse" });
+}
 
 const LAST_UPDATED = "May 26, 2026";
 const CONTACT_EMAIL = "japansrilanka67@gmail.com";

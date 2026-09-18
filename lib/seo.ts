@@ -2,9 +2,38 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 
+/**
+ * The single source of truth for our public origin.
+ *
+ * It MUST be the host the site actually serves, which is www: the apex
+ * 307s to https://www.jsltcc.com. Pointing canonicals, hreflang and the
+ * sitemap at the apex meant every URL we handed Google was a redirect,
+ * while the og:image (resolved from the real request host) said www —
+ * two hostnames competing for the same pages.
+ *
+ * sitemap.ts and robots.ts import this rather than repeating the
+ * expression, so the three can no longer disagree.
+ */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://jsltcc.com"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jsltcc.com"
 ).replace(/\/$/, "");
+
+/**
+ * The generated card from app/opengraph-image.tsx. Relative, so
+ * metadataBase resolves it against SITE_URL and it stays correct if the
+ * origin ever changes.
+ *
+ * The dimensions are repeated rather than imported from lib/og-image,
+ * because that module imports ImageResponse from next/og — pulling the
+ * edge image renderer into every page that builds metadata. They must
+ * stay in step with `ogSize` there.
+ */
+const OG_IMAGE = {
+  url: "/opengraph-image",
+  width: 1200,
+  height: 630,
+  alt: "JSLTCC — Japan Sri Lanka Technology & Cultural Centre",
+};
 
 const OG_LOCALE: Record<string, string> = {
   en: "en_US",
@@ -50,9 +79,6 @@ export async function buildMetadata({
     title,
     description,
     // Favicon → Next.js convention: app/icon.png + app/apple-icon.png
-    // OG/Twitter image → Next.js convention: app/opengraph-image.tsx +
-    //                    app/twitter-image.tsx (auto-hashed URLs that
-    //                    invalidate platform caches on every change)
     alternates: {
       canonical: url,
       languages,
@@ -64,11 +90,19 @@ export async function buildMetadata({
       siteName: "JSLTCC",
       type: "website",
       locale: OG_LOCALE[locale] ?? "en_US",
+      // Named explicitly. Next only falls back to app/opengraph-image.tsx
+      // when a page declares no openGraph.images — and this function
+      // declares an openGraph block, which suppressed the file-based
+      // image on every page that used it. The result was that the ten
+      // pages we manage had no social preview while the three we had
+      // forgotten about did.
+      images: [OG_IMAGE],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [OG_IMAGE],
     },
   };
 }
@@ -86,10 +120,17 @@ export function organizationJsonLd() {
     foundingDate: "2002",
     description:
       "Japanese language school and study-abroad consultancy in Sri Lanka. Official TOPJ examination centre, JLPT preparation, and university placements in Japan, UK, and Australia.",
+    // The centre has been in Gampaha since 2002. "Colombo" here was
+    // placeholder text from the first build that outlived the rest of
+    // the placeholders — and because it sat in structured data rather
+    // than on the page, it told Google the school is in the wrong city
+    // while the visible contact details said otherwise.
     address: {
       "@type": "PostalAddress",
+      streetAddress: "Gampaha Pradesiya Saba Building, Miriswatte, Mudungoda",
+      addressLocality: "Gampaha",
+      addressRegion: "Western Province",
       addressCountry: "LK",
-      addressLocality: "Colombo",
     },
     sameAs: [
       // Add real social profiles here as they're created:

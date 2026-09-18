@@ -66,9 +66,18 @@
   "howItWorks": {
     "title": "How It Works",
     "subtitle": "Your journey from Sri Lanka to Japan in 3 simple steps",
-    "step1": { "title": "Apply", "desc": "Submit your application and attend a free counselling session with our experts." },
-    "step2": { "title": "Get Placed", "desc": "We match you with the right school and program based on your goals and budget." },
-    "step3": { "title": "Study Abroad", "desc": "Arrive in Japan with full visa support and pre-departure guidance from our team." }
+    "step1": {
+      "title": "Apply",
+      "desc": "Submit your application and attend a free counselling session with our experts."
+    },
+    "step2": {
+      "title": "Get Placed",
+      "desc": "We match you with the right school and program based on your goals and budget."
+    },
+    "step3": {
+      "title": "Study Abroad",
+      "desc": "Arrive in Japan with full visa support and pre-departure guidance from our team."
+    }
   },
   "testimonials": {
     "title": "Student Stories",
@@ -187,15 +196,15 @@
     },
     "activities": {
       "title": "Cultural Events & Activities | JSLTCC",
-      "description": "Japanese cultural events, language exchange meetups, and student activities at JSLTCC's Colombo centre."
+      "description": "Japanese cultural events, language exchange meetups, and student activities at JSLTCC's Gampaha centre."
     },
     "contact": {
       "title": "Contact JSLTCC | Get in Touch",
-      "description": "Reach JSLTCC's Colombo office for course enrolment, study-abroad consultation, or TOPJ exam registration."
+      "description": "Reach JSLTCC's Gampaha office for course enrolment, study-abroad consultation, or TOPJ exam registration."
     },
     "japaneseLanguage": {
       "title": "Japanese Language Courses | JLPT N5–N1 Classes in Sri Lanka",
-      "description": "Learn Japanese from N5 beginner to N1 advanced. Native and Sri Lankan instructors, JLPT and TOPJ exam prep, weekend and weekday batches in Colombo."
+      "description": "Learn Japanese from N5 beginner to N1 advanced. Native and Sri Lankan instructors, JLPT and TOPJ exam prep, weekend and weekday batches in Gampaha."
     },
     "studyInJapan": {
       "title": "Study in Japan from Sri Lanka | Universities & Language Schools",
@@ -216,6 +225,18 @@
     "visaServices": {
       "title": "Japan Student & Working Visa Services | JSLTCC Sri Lanka",
       "description": "Student, working, and training visa assistance for Japan. Document preparation, embassy interview prep, and end-to-end support from experienced counsellors."
+    },
+    "register": {
+      "title": "Register for Japanese Classes — JSLTCC",
+      "description": "Register for in-person JLPT N5, N4, and N3 Japanese language classes at our JSLTCC Gampaha Centre. Course fee LKR 35,000. Pick a level, fill in a few details, and we'll save your seat for the next intake."
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy — JSLTCC",
+      "description": "How JSLTCC (Japan Sri Lanka Technology & Cultural Centre) handles your personal information when you contact us about Japanese language courses and study-abroad programs."
+    },
+    "termsOfUse": {
+      "title": "Terms of Use — JSLTCC",
+      "description": "Terms governing the use of JSLTCC's website, student portal, and online learning tools (including the AI Voice Partner)."
     }
   }
 }

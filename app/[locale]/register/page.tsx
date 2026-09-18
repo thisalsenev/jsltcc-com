@@ -1,11 +1,14 @@
-import type { Metadata } from "next";
 import RegisterClient from "./RegisterClient";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Register for Japanese Classes — JSLTCC",
-  description:
-    "Register for in-person JLPT N5, N4, and N3 Japanese language classes at JSLTCC Colombo. Course fee LKR 35,000. Pick a level, fill in a few details, and we'll save your seat for the next intake.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildMetadata({ locale, path: "/register", namespace: "register" });
+}
 
 export default function RegisterPage() {
   return <RegisterClient />;
