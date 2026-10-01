@@ -77,7 +77,7 @@ export function renderOgImage() {
               background: "#f87171",
             }}
           />
-          Since 2002 · Trusted by 5,000+ Students
+          Since 2002 · Trusted by 4,000+ Students
         </div>
 
         {/* Wordmark */}

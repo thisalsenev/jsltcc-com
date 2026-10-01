@@ -57,7 +57,7 @@ function AboutContent() {
               <div className="grid grid-cols-2 gap-6 text-center">
                 {[
                   { value: "2002", label: "Founded" },
-                  { value: "5,000+", label: "Graduates" },
+                  { value: "4,000+", label: "Graduates" },
                   { value: "40+", label: "Partner Schools" },
                   { value: "20+", label: "Years Experience" },
                 ].map((stat) => (
